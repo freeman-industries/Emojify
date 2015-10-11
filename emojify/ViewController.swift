@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     
     
     
+    //SECTION: VARIABLES AND STUFF
+    
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
@@ -34,9 +36,6 @@ class ViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var photoGrid: UICollectionView!
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,15 +52,6 @@ class ViewController: UIViewController {
         navBar.translucent = false
         navBar.barTintColor = UIColor(hex: 0x4000FF)
         navBar.titleTextAttributes = [NSFontAttributeName : navbarFont, NSForegroundColorAttributeName : UIColor(hex: 0xFFFFFF)]
-        
-//        imagePicker.navigationBar.translucent = false
-//        imagePicker.navigationBar.barTintColor = UIColor(hex: 0x4000FF)
-//        imagePicker.navigationBar.tintColor = UIColor(hex: 0xFFFFFF)
-//        imagePicker.navigationBar.titleTextAttributes = [NSFontAttributeName : navbarFont, NSForegroundColorAttributeName : UIColor(hex: 0xFFFFFF)]
-//        
-//        imageContainer.clipsToBounds = true
-//        
-//        imagePicker.delegate = self
         
         
         PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
@@ -84,37 +74,8 @@ class ViewController: UIViewController {
     
     
     
-//    let imagePicker = UIImagePickerController()
-//
-//    @IBAction func loadImage(sender: AnyObject) {
-//        imagePicker.allowsEditing = false
-//        imagePicker.sourceType = .PhotoLibrary
-//        
-//        presentViewController(imagePicker, animated: true, completion: nil)
-//    }
-//    
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            imageView.contentMode = .ScaleAspectFill
-//            imageView.image = pickedImage
-//            imageView.clipsToBounds = true
-//            
-//            //remove all emoji
-//            imageContainer.subviews.forEach({
-//                if($0 is UIImageView){
-//                    return
-//                }
-//                
-//                $0.removeFromSuperview()
-//            })
-//            emojiSelected = true
-//            activeEmoji = UIButton()
-//        }
-//        
-//        dismissViewControllerAnimated(true, completion: nil)
-//    }
     
-    
+    //SECTION: IMAGE VIEW - EMOJI EDITING ETC
     
     //TODO I have forced emojiSelected to always be true. I want people to be able to position the background photo as well - current it crops to a square. I need to make the behaviour like Instagram - fill to square but people can manipulate the photo to include more or less, rotate etc.
     
@@ -243,6 +204,11 @@ class ViewController: UIViewController {
     
     
     
+    
+    
+    //SECTION: LOAD IN PHOTOS (also saving, probs should move it)
+    
+    
     @IBAction func savePhoto(sender: UIButton) {
         //Create the UIImage
         let scale = UIScreen.mainScreen().scale
@@ -319,6 +285,8 @@ class ViewController: UIViewController {
 }
 
 
+//SECTION: EXTENSIONS - important to keep things working.
+
 extension ViewController: UIGestureRecognizerDelegate
 {
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -344,7 +312,7 @@ extension ViewController: PHPhotoLibraryChangeObserver
 }
 
 
-extension VieWController : UICollectionViewDataSource
+extension ViewController : UICollectionViewDataSource
 {
     
     //1
