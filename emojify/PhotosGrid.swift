@@ -74,68 +74,90 @@ class PhotosGridController : UICollectionViewController {
         
         let assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: phOptions)
         
-        var count = assets.count
+        let count = assets.count
         
         print("\nNumber of images in camera roll...")
         print(count)
         
-        if(count > 40){
-            count = 40
-        }
-        
         dataObject = [(Dictionary<String, Any>)?](count: count, repeatedValue: nil)
         
         for(var i = 0; i < count; i++){
-        
+            
             //we need to scope this within the for loop - i is unreliable. now we can access it safely from the requestImage callback below.
             let assetIndex = i
             
             //asset is scoped similarly to assetIndex.
             let asset = assets[i] as! PHAsset
-        
-            let options:PHImageRequestOptions = PHImageRequestOptions()
-            options.synchronous = false
             
-            let screenWidth = UIScreen.mainScreen().bounds.width
-            let screenScale = UIScreen.mainScreen().scale
-            let thumbnailWidth = (screenWidth / 4) - 1.5
+            //we need to initialize our dictionaries now. note that all image data is currently blank.
+            self.dataObject[assetIndex] = [
+                "asset": asset as PHAsset,
+                "thumbnail": nil as UIImage?,
+//                "fullsize": nil as UIImage?,
+                "selected": false as Bool,
+            ]
             
-            let targetDimension = thumbnailWidth * screenScale
+            //the dataObject is basically a model for the CollectionView. we need to set selected to be true for the first asset, and the view will render it as such.
+            //we also (just once) need to manually send the first image to ViewController to display in the big screen.
+            if(assetIndex == 0){
+                self.dataObject[assetIndex]?["selected"] = true
+                self.sendHighResPhoto(assetIndex, asset: asset)
+            }
             
-//            print("Requesting thumbnail of size \(targetDimension).")
-            
-            PHImageManager.defaultManager().requestImageForAsset(
-                asset,
-                targetSize: CGSize(width: targetDimension, height: targetDimension),
-                contentMode: PHImageContentMode.AspectFill,
-                options: options,
-                resultHandler: { (result, info) in
-                
-                    //returns UIImage result
-                    
-                    //this will initially show us a thumbnail, and then will overwrite with a big image asynchronously. pretty cool.
-                    if((self.dataObject[assetIndex]) != nil){
-                        self.dataObject[assetIndex]?["thumbnail"] = result as UIImage!
-                    } else {
-                        self.dataObject[assetIndex] = [
-                            "asset": asset as PHAsset,
-                            "thumbnail": result as UIImage!,
-                            "fullsize": nil as UIImage?,
-                            "selected": false as Bool,
-                        ]
-                    }
-                    
-                    if(assetIndex == 0){
-                        self.dataObject[assetIndex]?["selected"] = true
-                        self.sendHighResPhoto(assetIndex, asset: asset)
-                    }
-                    
-                    self.collectionView?.reloadData()
-                    
-                }
-            )
-        
+            self.collectionView?.reloadData()
         }
+        
+//        for(var i = 0; i < count; i++){
+//        
+//            //we need to scope this within the for loop - i is unreliable. now we can access it safely from the requestImage callback below.
+//            let assetIndex = i
+//            
+//            //asset is scoped similarly to assetIndex.
+//            let asset = assets[i] as! PHAsset
+//        
+//            let options:PHImageRequestOptions = PHImageRequestOptions()
+//            options.synchronous = false
+//            
+//            let screenWidth = UIScreen.mainScreen().bounds.width
+//            let screenScale = UIScreen.mainScreen().scale
+//            let thumbnailWidth = (screenWidth / 4) - 1.5
+//            
+//            let targetDimension = thumbnailWidth * screenScale
+//            
+////            print("Requesting thumbnail of size \(targetDimension).")
+//            
+//            PHImageManager.defaultManager().requestImageForAsset(
+//                asset,
+//                targetSize: CGSize(width: targetDimension, height: targetDimension),
+//                contentMode: PHImageContentMode.AspectFill,
+//                options: options,
+//                resultHandler: { (result, info) in
+//                
+//                    //returns UIImage result
+//                    
+//                    //this will initially show us a thumbnail, and then will overwrite with a big image asynchronously. pretty cool.
+//                    if((self.dataObject[assetIndex]) != nil){
+//                        self.dataObject[assetIndex]?["thumbnail"] = result as UIImage!
+//                    } else {
+//                        self.dataObject[assetIndex] = [
+//                            "asset": asset as PHAsset,
+//                            "thumbnail": result as UIImage!,
+//                            "fullsize": nil as UIImage?,
+//                            "selected": false as Bool,
+//                        ]
+//                    }
+//                    
+//                    if(assetIndex == 0){
+//                        self.dataObject[assetIndex]?["selected"] = true
+//                        self.sendHighResPhoto(assetIndex, asset: asset)
+//                    }
+//                    
+//                    self.collectionView?.reloadData()
+//                    
+//                }
+//            )
+//        
+//        }
         
     }
     
@@ -172,12 +194,50 @@ class PhotosGridController : UICollectionViewController {
         
         //set up the imageView for this cell.
         
-        let thumbnail = dataObject[indexPath.row]?["thumbnail"]
-        if(thumbnail != nil){
-            cell.imageView.image = thumbnail as? UIImage
+        let thumbnail = dataObject[indexPath.row]?["thumbnail"] as? UIImage
+        if(thumbnail !== nil){
+            //we've already downloaded a thumbnail for this asset! let's display it.
+            cell.imageView.image = thumbnail
+            
+            
+        } else {
+            //we need to retreive a thumbnail for this asset...
+            let asset = dataObject[indexPath.row]?["asset"] as! PHAsset
+            
+            let options:PHImageRequestOptions = PHImageRequestOptions()
+            options.synchronous = false
+            
+            let screenWidth = UIScreen.mainScreen().bounds.width
+            let screenScale = UIScreen.mainScreen().scale
+            let thumbnailWidth = (screenWidth / 4) - 1.5
+            
+            let targetDimension = thumbnailWidth * screenScale
+            
+            //        print("Requesting thumbnail of size \(targetDimension).")
+            
+            PHImageManager.defaultManager().requestImageForAsset(
+                asset,
+                targetSize: CGSize(width: targetDimension, height: targetDimension),
+                contentMode: PHImageContentMode.AspectFill,
+                options: options,
+                resultHandler: { (result, info) in
+                    
+                    //returns UIImage result
+                    
+                    //this will initially show us a tiny thumbnail, and then will overwrite with a bigger image asynchronously. pretty cool.
+                    cell.imageView.image = result as UIImage!
+                    
+                    //let's store it for next time too.
+                    self.dataObject[indexPath.row]?["thumbnail"] = result as UIImage!
+                    
+                    
+                }
+            )
         }
         
         cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        
+        
         
         //check data model to see if this cell needs to be styled as selected or deselected.
         let selected = dataObject[indexPath.row]?["selected"]
@@ -202,6 +262,11 @@ class PhotosGridController : UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("\nSelected:")
         print(indexPath.row)
+        
+        if(dataObject[indexPath.row]?["selected"] as? Bool == true){
+            print("This tile is already selected. Ignoring...")
+            return
+        }
         
         for(var i = 0; i < dataObject.count; i++){
             dataObject[i]?["selected"] = false
@@ -228,11 +293,11 @@ class PhotosGridController : UICollectionViewController {
         
         let existingAsset = self.dataObject[index]?["fullsize"] as? UIImage
         
-        if(existingAsset !== nil){
-            NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: existingAsset as UIImage!)
-            
-            
-        } else {
+//        if(existingAsset !== nil){
+//            NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: existingAsset as UIImage!)
+//            
+//            
+//        } else {
             let options:PHImageRequestOptions = PHImageRequestOptions()
             options.synchronous = false
             
@@ -251,21 +316,16 @@ class PhotosGridController : UICollectionViewController {
                 resultHandler: { (result, info) in
                     
                     //returns UIImage result
-                    
-                    if(info?[PHImageResultIsDegradedKey] as! Int == 0){
-                        
-                        self.dataObject[index]?["fullsize"] = result as UIImage!
-                        
-                        NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: result as UIImage!)
-                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: result as UIImage!)
+//                    self.dataObject[index]?["fullsize"] = result as UIImage!
                     
                     
                 }
             )
             
             
-        }
-                
+//        }
+        
     }
     
 }
