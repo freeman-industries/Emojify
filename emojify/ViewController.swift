@@ -20,6 +20,14 @@ extension UIColor {
     }
 }
 
+extension NSLayoutConstraint {
+    
+    override public var description: String {
+        let id = identifier ?? ""
+        return "id: \(id), constant: \(constant)" //you may print whatever you want here
+    }
+}
+
 import UIKit
 import Photos
 
@@ -35,40 +43,59 @@ class ViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
-    @IBOutlet weak var photoGrid: UICollectionView!
+    @IBOutlet weak var controlsContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("hello world bitches")
+        print("hello world bitches (ViewController)")
         
         // Do any additional setup after loading the view, typically from a nib.
         
         // Add styling and correct metrics to our view...
         let navbarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightHeavy)
         
-        self.view.backgroundColor = UIColor(hex: 0x4000FF)
+        self.view.backgroundColor = UIColor(hex: 0x000000)
         
         navBar.translucent = false
         navBar.barTintColor = UIColor(hex: 0x4000FF)
         navBar.titleTextAttributes = [NSFontAttributeName : navbarFont, NSForegroundColorAttributeName : UIColor(hex: 0xFFFFFF)]
         
         
-        PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "setImage:",
+            name: "imageChosen",
+            object: nil
+        )
         
-        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized
-        {
-            populatePhotoGrid()
-        }
-        else
-        {
-            PHPhotoLibrary.requestAuthorization(requestAuthorizationHandler)
-        }
+        let topHalf = UIScreen.mainScreen().bounds.width + navBar.frame.size.height + 2
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("setControlContainerSize", object: topHalf)
+        
+        print("end of viewDidLoad in ViewController")
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    
+    
+    func setImage(notification: NSNotification){
+        
+//        print(notification)
+        
+        let image = notification.object as! UIImage
+        
+        imageView.image = image
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
     }
     
     
@@ -225,63 +252,6 @@ class ViewController: UIViewController {
     
     
     
-    
-    
-    
-    func populatePhotoGrid() {
-        
-        let assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: nil)
-        
-        let i = 1
-        
-//        for(var i = 0; i < assets.count; i++){
-        
-            let asset = assets[i] as! PHAsset
-            
-            let options:PHImageRequestOptions = PHImageRequestOptions()
-            options.synchronous = true
-            options.deliveryMode = PHImageRequestOptionsDeliveryMode.FastFormat
-            
-            PHImageManager.defaultManager().requestImageForAsset(
-                asset,
-                targetSize: CGSize(width: CGFloat(1200), height: CGFloat(1200)),
-                contentMode: PHImageContentMode.AspectFill,
-                options: nil,
-                resultHandler: { (result, _) in
-                    let image = UIImageView()
-                    let cell = UICollectionViewCell()
-                    
-                    self.imageView.image = result
-                    
-//                    image.contentMode = .ScaleAspectFill
-//                    image.image = result
-//                    image.clipsToBounds = true
-                    
-                    cell.addSubview(image)
-                    
-                    self.photoGrid.addSubview(cell)
-                }
-            )
-
-//        }
-        
-    }
-    
-    
-    
-    
-    
-    func requestAuthorizationHandler(status: PHAuthorizationStatus)
-    {
-        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized
-        {
-            //to run it in the main queue, whatever that means...
-            dispatch_async(dispatch_get_main_queue(), {self.populatePhotoGrid()})
-            
-        }
-    }
-    
-    
 }
 
 
@@ -291,45 +261,5 @@ extension ViewController: UIGestureRecognizerDelegate
 {
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true;
-    }
-}
-
-
-extension ViewController: PHPhotoLibraryChangeObserver
-{
-    func photoLibraryDidChange(changeInstance: PHChange)
-    {
-//        guard let assets = assets else
-//        {
-//            return
-//        }
-//        
-//        if let changeDetails = changeInstance.changeDetailsForFetchResult(assets) where uiCreated
-//        {
-//            PhotoBrowser.executeInMainQueue{ self.assets = changeDetails.fetchResultAfterChanges }
-//        }
-    }
-}
-
-
-extension ViewController : UICollectionViewDataSource
-{
-    
-    //1
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return searches.count
-    }
-    
-    //2
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searches[section].searchResults.count
-    }
-    
-    //3
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
-        cell.backgroundColor = UIColor.blackColor()
-        // Configure the cell
-        return cell
     }
 }

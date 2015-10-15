@@ -14,6 +14,9 @@
 		3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */; };
 		3F55D53F1BC6784F00377B8A /* emojifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D53E1BC6784F00377B8A /* emojifyTests.swift */; };
 		3F55D54A1BC6784F00377B8A /* emojifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5491BC6784F00377B8A /* emojifyUITests.swift */; };
+		3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5591BCA593E00377B8A /* PhotosGrid.swift */; settings = {ASSET_TAGS = (); }; };
+		3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D55B1BCB688F00377B8A /* PhotosCell.swift */; settings = {ASSET_TAGS = (); }; };
+		3FB88F1A1BCFB2DF0079EDC3 /* bread.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB88F191BCFB2DF0079EDC3 /* bread.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		3F55D5451BC6784F00377B8A /* emojifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = emojifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F55D5491BC6784F00377B8A /* emojifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emojifyUITests.swift; sourceTree = "<group>"; };
 		3F55D54B1BC6784F00377B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F55D5591BCA593E00377B8A /* PhotosGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosGrid.swift; sourceTree = "<group>"; };
+		3F55D55B1BCB688F00377B8A /* PhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
+		3FB88F191BCFB2DF0079EDC3 /* bread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bread.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +103,12 @@
 		3F55D5281BC6784F00377B8A /* emojify */ = {
 			isa = PBXGroup;
 			children = (
+				3FB88F191BCFB2DF0079EDC3 /* bread.png */,
 				3F55D5291BC6784F00377B8A /* AppDelegate.swift */,
 				3F55D52B1BC6784F00377B8A /* ViewController.swift */,
 				3F55D52D1BC6784F00377B8A /* Main.storyboard */,
+				3F55D5591BCA593E00377B8A /* PhotosGrid.swift */,
+				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F55D5301BC6784F00377B8A /* Assets.xcassets */,
 				3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */,
 				3F55D5351BC6784F00377B8A /* Info.plist */,
@@ -230,6 +239,7 @@
 			files = (
 				3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */,
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
+				3FB88F1A1BCFB2DF0079EDC3 /* bread.png in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,7 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */,
 				3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */,
+				3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */,
 				3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +497,7 @@
 				3F55D5501BC6784F00377B8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3F55D5511BC6784F00377B8A /* Build configuration list for PBXNativeTarget "emojifyTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +506,7 @@
 				3F55D5531BC6784F00377B8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3F55D5541BC6784F00377B8A /* Build configuration list for PBXNativeTarget "emojifyUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +515,7 @@
 				3F55D5561BC6784F00377B8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
