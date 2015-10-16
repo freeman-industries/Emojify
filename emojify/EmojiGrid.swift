@@ -16,7 +16,7 @@ class EmojiGridController : UICollectionViewController {
     let reuseIdentifier = "emojiCell"
     
     //empty model for our CollectionView. we'll initialize and use this later on.
-    var dataObject = [String](count: 1000, repeatedValue: "😝")
+    var dataObject: [String] = []
     
     
     //i have to do this because I don't understand AutoLayout. Fuck autolayout.
@@ -50,7 +50,33 @@ class EmojiGridController : UICollectionViewController {
             object: nil
         )
         
+        //read emoji file and populate model.
+        dispatch_async(dispatch_get_main_queue(), {self.getEmojiData()})
+        
         print("\nEnd of EmojiGrid viewDidLoad")
+    }
+    
+    
+    func getEmojiData(){
+        let path = NSBundle.mainBundle().pathForResource("allEmoji", ofType: "txt")
+        
+        do{
+            //TODO iOS 9 doesn't support some of these characters. how can i make this per-device compatible??
+            
+            let emojiFile = try String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
+            
+            //from stack overflow, splits string characters into array
+            let characters = Array(emojiFile.characters)
+            
+            characters.forEach({
+                dataObject.append(String($0))
+            })
+            
+            self.collectionView?.reloadData()
+            
+        } catch {
+            print("Error reading file.")
+        }
     }
 
     
@@ -75,7 +101,7 @@ class EmojiGridController : UICollectionViewController {
         
         cell.emojiLabel.text = emoji
         
-        let fontSize = floor(cell.bounds.width * 0.9)
+        let fontSize = floor(cell.bounds.width * 0.8)
         
 //        print("Emoji font size: \(fontSize)")
         

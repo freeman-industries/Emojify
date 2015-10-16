@@ -207,6 +207,18 @@ class ViewController: UIViewController {
         imageView.image = image
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
+        
+        //remove all emoji
+        imageContainer.subviews.forEach({
+            if($0 is UIImageView){
+                return
+            }
+        
+            $0.removeFromSuperview()
+        })
+        
+        emojiSelected = true
+        activeEmoji = UIButton()
     }
     
     
@@ -257,7 +269,7 @@ class ViewController: UIViewController {
         
         let str = notification.object as! String
         
-        let emojiFrame = UIView(frame: CGRectMake(0,0,80,80))
+        let emojiFrame = UIView(frame: CGRectMake(0,0,90,90))
         emojiFrame.userInteractionEnabled = false
         emojiFrame.center = imageContainer.center
         
@@ -284,7 +296,9 @@ class ViewController: UIViewController {
         
         emojiFrame.center = centerCoords
         
-        let emoji = UIButton(frame: CGRectMake(0,0,80,80))
+        
+        
+        let emoji = UIButton(frame: CGRectMake(0,0,90,90))
         
         emoji.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         
