@@ -63,17 +63,42 @@
                                             <segue destination="aWA-HH-Ruz" kind="embed" id="LAg-vN-jjg"/>
                                         </connections>
                                     </containerView>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5RI-3B-kNf" userLabel="Temporary Sharing View">
+                                        <rect key="frame" x="651" y="7" width="240" height="128"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlS-QD-XPe">
+                                                <rect key="frame" x="97" y="49" width="46" height="30"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="80"/>
+                                                <state key="normal" title="💾">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="savePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2NP-Ul-BNS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="zlS-QD-XPe" firstAttribute="centerY" secondItem="5RI-3B-kNf" secondAttribute="centerY" id="NxG-Rp-6M0"/>
+                                            <constraint firstItem="zlS-QD-XPe" firstAttribute="centerX" secondItem="5RI-3B-kNf" secondAttribute="centerX" id="Sb3-gI-Dqr"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="5RI-3B-kNf" firstAttribute="leading" secondItem="167-4A-MJa" secondAttribute="trailing" id="0AS-ob-cNM"/>
                                     <constraint firstItem="167-4A-MJa" firstAttribute="leading" secondItem="lDB-3R-4RT" secondAttribute="trailing" id="3l0-TK-Sra"/>
                                     <constraint firstItem="lDB-3R-4RT" firstAttribute="leading" secondItem="2mI-pf-MP0" secondAttribute="leading" id="6i8-CE-vMb"/>
+                                    <constraint firstItem="5RI-3B-kNf" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" id="7jb-9n-rie"/>
                                     <constraint firstAttribute="width" identifier="id30" id="GbJ-4k-JfB"/>
                                     <constraint firstItem="167-4A-MJa" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" id="WdE-SV-gCD"/>
                                     <constraint firstAttribute="bottom" secondItem="167-4A-MJa" secondAttribute="bottom" id="Z8k-Hd-bGk"/>
                                     <constraint firstItem="lDB-3R-4RT" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" identifier="id51" id="bla-jv-5D3"/>
                                     <constraint firstAttribute="bottom" secondItem="lDB-3R-4RT" secondAttribute="bottom" identifier="id52" id="ksL-fP-8d1"/>
+                                    <constraint firstAttribute="bottom" secondItem="5RI-3B-kNf" secondAttribute="bottom" constant="45" id="lBV-8P-Wax"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0j-h4-4M8" userLabel="Tab Bar">
@@ -246,7 +271,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <animations/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.25098039215686274" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="wzM-0T-b3E" firstAttribute="leading" secondItem="TZ4-HE-Sat" secondAttribute="leading" id="aYn-6D-9vn"/>
                                     <constraint firstItem="wzM-0T-b3E" firstAttribute="top" secondItem="TZ4-HE-Sat" secondAttribute="top" id="kIl-9G-CIi"/>

@@ -190,6 +190,8 @@ class ViewController: UIViewController {
                 self.view.layoutIfNeeded()
             },
             completion: {finished in })
+        
+        deselectAllEmoji()
     }
     
     
@@ -231,6 +233,16 @@ class ViewController: UIViewController {
     
     var activeEmoji = UIView()
     var emojiSelected = true
+    
+    func deselectAllEmoji(){
+        
+        if(activeEmoji.subviews.count > 0){
+            activeEmoji.subviews[0].layer.removeAllAnimations()
+        }
+        
+        activeEmoji = UIView()
+
+    }
     
     func emojiTap(sender: UIButton!){
         
