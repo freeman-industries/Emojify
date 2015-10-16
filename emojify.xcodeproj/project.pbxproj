@@ -16,7 +16,8 @@
 		3F55D54A1BC6784F00377B8A /* emojifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5491BC6784F00377B8A /* emojifyUITests.swift */; };
 		3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5591BCA593E00377B8A /* PhotosGrid.swift */; settings = {ASSET_TAGS = (); }; };
 		3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D55B1BCB688F00377B8A /* PhotosCell.swift */; settings = {ASSET_TAGS = (); }; };
-		3FB88F1A1BCFB2DF0079EDC3 /* bread.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB88F191BCFB2DF0079EDC3 /* bread.png */; settings = {ASSET_TAGS = (); }; };
+		3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */; settings = {ASSET_TAGS = (); }; };
+		3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +53,8 @@
 		3F55D54B1BC6784F00377B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F55D5591BCA593E00377B8A /* PhotosGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosGrid.swift; sourceTree = "<group>"; };
 		3F55D55B1BCB688F00377B8A /* PhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
-		3FB88F191BCFB2DF0079EDC3 /* bread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bread.png; sourceTree = "<group>"; };
+		3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiGrid.swift; sourceTree = "<group>"; };
+		3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +105,11 @@
 		3F55D5281BC6784F00377B8A /* emojify */ = {
 			isa = PBXGroup;
 			children = (
-				3FB88F191BCFB2DF0079EDC3 /* bread.png */,
 				3F55D5291BC6784F00377B8A /* AppDelegate.swift */,
 				3F55D52B1BC6784F00377B8A /* ViewController.swift */,
 				3F55D52D1BC6784F00377B8A /* Main.storyboard */,
+				3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */,
+				3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */,
 				3F55D5591BCA593E00377B8A /* PhotosGrid.swift */,
 				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F55D5301BC6784F00377B8A /* Assets.xcassets */,
@@ -239,7 +242,6 @@
 			files = (
 				3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */,
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
-				3FB88F1A1BCFB2DF0079EDC3 /* bread.png in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,10 +267,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */,
 				3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */,
 				3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */,
 				3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */,
 				3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */,
+				3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

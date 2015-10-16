@@ -12,14 +12,14 @@ import Foundation
 
 class PhotosGridController : UICollectionViewController {
     
-    @IBOutlet var photosGrid: UICollectionView!
-    
+    //ray wenderleich's tutorial put this up here. it's just an ID from the Storyboard and it references the UICollectionViewCells.
     let reuseIdentifier = "photoCell"
     
+    //empty model for our CollectionView. we'll initialize and use this later on.
     var dataObject:[(Dictionary<String, Any>)?] = []
     
     
-    
+    //i have to do this because I don't understand AutoLayout. Fuck autolayout.
     func setControlContainerSize(notification: NSNotification) {
         var frame: CGRect = self.view.frame
         
@@ -40,8 +40,9 @@ class PhotosGridController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("hello world bitches (PhotosGrid)")
+        print("\nhello world bitches (PhotosGrid)")
         
+        //messenger bus stuff for setControlContainerSize
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: "setControlContainerSize:",
@@ -49,6 +50,7 @@ class PhotosGridController : UICollectionViewController {
             object: nil
         )
         
+        //This is where we ask for permission for the user's photo library. it would be nice to move this to the splash screen.
         PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
         
         if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized
@@ -60,7 +62,7 @@ class PhotosGridController : UICollectionViewController {
             PHPhotoLibrary.requestAuthorization(requestAuthorizationHandler)
         }
         
-        print("End of PhotosGrid viewDidLoad")
+        print("\nEnd of PhotosGrid viewDidLoad")
     }
     
     
@@ -79,6 +81,7 @@ class PhotosGridController : UICollectionViewController {
         print("\nNumber of images in camera roll...")
         print(count)
         
+        //all the code for the rest of this function is about initing the model for our collectionView.
         dataObject = [(Dictionary<String, Any>)?](count: count, repeatedValue: nil)
         
         for(var i = 0; i < count; i++){
@@ -93,7 +96,6 @@ class PhotosGridController : UICollectionViewController {
             self.dataObject[assetIndex] = [
                 "asset": asset as PHAsset,
                 "thumbnail": nil as UIImage?,
-//                "fullsize": nil as UIImage?,
                 "selected": false as Bool,
             ]
             
@@ -104,75 +106,53 @@ class PhotosGridController : UICollectionViewController {
                 self.sendHighResPhoto(assetIndex, asset: asset)
             }
             
+            //we have to explicitly tell collectionView to re-render. we do it like this.
             self.collectionView?.reloadData()
         }
         
-//        for(var i = 0; i < count; i++){
-//        
-//            //we need to scope this within the for loop - i is unreliable. now we can access it safely from the requestImage callback below.
-//            let assetIndex = i
-//            
-//            //asset is scoped similarly to assetIndex.
-//            let asset = assets[i] as! PHAsset
-//        
-//            let options:PHImageRequestOptions = PHImageRequestOptions()
-//            options.synchronous = false
-//            
-//            let screenWidth = UIScreen.mainScreen().bounds.width
-//            let screenScale = UIScreen.mainScreen().scale
-//            let thumbnailWidth = (screenWidth / 4) - 1.5
-//            
-//            let targetDimension = thumbnailWidth * screenScale
-//            
-////            print("Requesting thumbnail of size \(targetDimension).")
-//            
-//            PHImageManager.defaultManager().requestImageForAsset(
-//                asset,
-//                targetSize: CGSize(width: targetDimension, height: targetDimension),
-//                contentMode: PHImageContentMode.AspectFill,
-//                options: options,
-//                resultHandler: { (result, info) in
-//                
-//                    //returns UIImage result
-//                    
-//                    //this will initially show us a thumbnail, and then will overwrite with a big image asynchronously. pretty cool.
-//                    if((self.dataObject[assetIndex]) != nil){
-//                        self.dataObject[assetIndex]?["thumbnail"] = result as UIImage!
-//                    } else {
-//                        self.dataObject[assetIndex] = [
-//                            "asset": asset as PHAsset,
-//                            "thumbnail": result as UIImage!,
-//                            "fullsize": nil as UIImage?,
-//                            "selected": false as Bool,
-//                        ]
-//                    }
-//                    
-//                    if(assetIndex == 0){
-//                        self.dataObject[assetIndex]?["selected"] = true
-//                        self.sendHighResPhoto(assetIndex, asset: asset)
-//                    }
-//                    
-//                    self.collectionView?.reloadData()
-//                    
-//                }
-//            )
-//        
-//        }
         
     }
-    
-    
-    
     
     
     func requestAuthorizationHandler(status: PHAuthorizationStatus)
     {
         if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized
         {
-            //to run it in the main queue, whatever that means...
+            //it's really important that we run the getPhoto stuff asynchronously. a lot of data is being handled in them and we don't want the thread to lock up.
+            //if we don't do this, the launch screen will appear for ages which sucks.
             dispatch_async(dispatch_get_main_queue(), {self.populatePhotoGrid()})
             
         }
+    }
+    
+    
+    func sendHighResPhoto(index: Int, asset: PHAsset){
+        //this function communicates with our parent View (where the big square image is), retrieves a photo from PHImageManager and then sends it an image to display.
+
+        let options:PHImageRequestOptions = PHImageRequestOptions()
+        options.synchronous = false
+        
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let screenScale = UIScreen.mainScreen().scale
+        
+        let targetDimension = screenWidth * screenScale
+        
+//        print("Requesting image of size \(targetDimension) to be displayed.")
+        
+        PHImageManager.defaultManager().requestImageForAsset(
+            asset,
+            targetSize: CGSize(width: targetDimension, height: targetDimension),
+            contentMode: PHImageContentMode.AspectFill,
+            options: options,
+            resultHandler: { (result, info) in
+                
+                //returns UIImage result
+                NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: result as UIImage!)
+                
+                
+            }
+        )
+        
     }
     
     
@@ -207,11 +187,16 @@ class PhotosGridController : UICollectionViewController {
             let options:PHImageRequestOptions = PHImageRequestOptions()
             options.synchronous = false
             
-            let screenWidth = UIScreen.mainScreen().bounds.width
-            let screenScale = UIScreen.mainScreen().scale
-            let thumbnailWidth = (screenWidth / 4) - 1.5
             
-            let targetDimension = thumbnailWidth * screenScale
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            let screenScale = UIScreen.mainScreen().scale
+            
+            let modifier: CGFloat = 4
+            let gapSpacing: CGFloat = 1
+            
+            let gapSpacingTotal = (modifier - 1) * gapSpacing
+            let targetDimension = ((screenSize.width - gapSpacingTotal) / modifier) * screenScale
+            
             
             //        print("Requesting thumbnail of size \(targetDimension).")
             
@@ -260,8 +245,8 @@ class PhotosGridController : UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("\nSelected:")
-        print(indexPath.row)
+//        print("\nSelected:")
+//        print(indexPath.row)
         
         if(dataObject[indexPath.row]?["selected"] as? Bool == true){
             print("This tile is already selected. Ignoring...")
@@ -280,8 +265,8 @@ class PhotosGridController : UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        print("\nDeselected:")
-        print(indexPath.row)
+//        print("\nDeselected:")
+//        print(indexPath.row)
         
         dataObject[indexPath.row]?["selected"] = false
         
@@ -289,51 +274,17 @@ class PhotosGridController : UICollectionViewController {
     }
     
     
-    func sendHighResPhoto(index: Int, asset: PHAsset){
-        
-        let existingAsset = self.dataObject[index]?["fullsize"] as? UIImage
-        
-//        if(existingAsset !== nil){
-//            NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: existingAsset as UIImage!)
-//            
-//            
-//        } else {
-            let options:PHImageRequestOptions = PHImageRequestOptions()
-            options.synchronous = false
-            
-            let screenWidth = UIScreen.mainScreen().bounds.width
-            let screenScale = UIScreen.mainScreen().scale
-            
-            let targetDimension = screenWidth * screenScale
-            
-            print("Requesting image of size \(targetDimension) to be displayed.")
-            
-            PHImageManager.defaultManager().requestImageForAsset(
-                asset,
-                targetSize: CGSize(width: targetDimension, height: targetDimension),
-                contentMode: PHImageContentMode.AspectFill,
-                options: options,
-                resultHandler: { (result, info) in
-                    
-                    //returns UIImage result
-                    NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: result as UIImage!)
-//                    self.dataObject[index]?["fullsize"] = result as UIImage!
-                    
-                    
-                }
-            )
-            
-            
-//        }
-        
-    }
-    
 }
 
 extension PhotosGridController: PHPhotoLibraryChangeObserver
 {
     func photoLibraryDidChange(changeInstance: PHChange)
     {
+        
+        //TODO PRETTY SURE THIS IS IMPORTANT
+        
+        
+        
         //        guard let assets = assets else
         //        {
         //            return
@@ -354,8 +305,12 @@ extension PhotosGridController : UICollectionViewDelegateFlowLayout {
             let screenSize: CGRect = UIScreen.mainScreen().bounds
             
             let modifier: CGFloat = 4
+            let gapSpacing: CGFloat = 1
             
-            return CGSize(width: (screenSize.width / modifier) - 1.5, height: (screenSize.width / modifier) - 1.5)
+            let gapSpacingTotal = (modifier - 1) * gapSpacing
+            let cellSize = (screenSize.width - gapSpacingTotal) / modifier
+            
+            return CGSize(width: cellSize, height: cellSize)
     }
     
     func collectionView(collectionView: UICollectionView,

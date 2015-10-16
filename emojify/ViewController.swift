@@ -6,28 +6,6 @@
 //  Copyright © 2015 Freeman Industries. All rights reserved.
 //
 
-extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
-    
-    convenience init(hex:Int) {
-        self.init(red:(hex >> 16) & 0xff, green:(hex >> 8) & 0xff, blue:hex & 0xff)
-    }
-}
-
-extension NSLayoutConstraint {
-    
-    override public var description: String {
-        let id = identifier ?? ""
-        return "id: \(id), constant: \(constant)" //you may print whatever you want here
-    }
-}
-
 import UIKit
 import Photos
 
@@ -43,24 +21,116 @@ class ViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
+    @IBOutlet weak var imageContainerLeft: NSLayoutConstraint!
+    @IBOutlet weak var imageContainerRight: NSLayoutConstraint!
+    
+    
     @IBOutlet weak var controlsContainer: UIView!
+    @IBOutlet weak var controlsContainerLeft: NSLayoutConstraint!
+    @IBOutlet weak var controlsContainerWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var tabBar: UIView!
+    
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("hello world bitches (ViewController)")
+        print("\nhello world bitches (ViewController)")
         
         // Do any additional setup after loading the view, typically from a nib.
         
         // Add styling and correct metrics to our view...
         let navbarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightHeavy)
         
-        self.view.backgroundColor = UIColor(hex: 0x000000)
-        
         navBar.translucent = false
         navBar.barTintColor = UIColor(hex: 0x4000FF)
         navBar.titleTextAttributes = [NSFontAttributeName : navbarFont, NSForegroundColorAttributeName : UIColor(hex: 0xFFFFFF)]
         
+        if(screenSize.height < 568){
+            imageContainerLeft.constant = 40
+            imageContainerRight.constant = 40
+        }
+        
+        
+        //calculate the size of everything on screen apart from controls container.
+        //+2 +2 for the margin on either side of the control container
+        let allElementsApartFromControls = imageContainer.frame.size.height + navBar.frame.size.height + 1
+        
+        //TODO maybe only 2 sections rather than 3? Share screen might be a full page change.
+        controlsContainerWidth.constant = screenSize.width * 3
+        //TODO this property should be animated based on app state. / 2 so we can see two states at the same time.
+        controlsContainerLeft.constant = 0
+        
+        //we need to generate layout constraints for width to make our controls view look good.
+        controlsContainer.subviews.forEach({
+
+            let viewWidth = NSLayoutConstraint (item: $0,
+                attribute: NSLayoutAttribute.Width,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: nil,
+                attribute: NSLayoutAttribute.NotAnAttribute,
+                multiplier: 1,
+                constant: screenSize.width)
+            controlsContainer.addConstraint(viewWidth)
+            
+        })
+        
+        //...and now let's set the width of our Tab Bar buttons.
+        //we need to generate layout constraints for width to make our controls view look good.
+        tabBar.subviews.forEach({
+            
+            let viewWidth = NSLayoutConstraint (item: $0,
+                attribute: NSLayoutAttribute.Width,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: nil,
+                attribute: NSLayoutAttribute.NotAnAttribute,
+                multiplier: 1,
+                constant: screenSize.width / 3)
+            tabBar.addConstraint(viewWidth)
+            
+        })
+        
+        //one sided border-top with some neat CGRect stuff.
+        let border = UIView()
+        border.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: 1)
+        border.backgroundColor = UIColor(hex: 0x000000)
+        
+        tabBar.addSubview(border)
+        
+        //add sexy blur effect to tabBar.
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            tabBar.backgroundColor = UIColor.clearColor()
+            
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = tabBar.bounds
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            
+            //insert this right at the bottom of our tabBar, z-index 0
+            tabBar.insertSubview(blurEffectView, atIndex: 0)
+        } 
+        else {
+            //dummy view that's life purpose is to occupy space 0 in the tab bar. so our button logic works correctly.
+            let dummyView = UIView()
+            dummyView.frame = tabBar.bounds
+            dummyView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            
+            dummyView.backgroundColor = UIColor(hex: 0x000000)
+            
+            tabBar.insertSubview(dummyView, atIndex: 0)
+        }
+        
+        //let's initialize our tab bar by auto selecting the first button.
+        setControlView(tabBar.subviews[1] as! UIButton)
+        
+        //END TAB BAR STYLING
+        
+        //cross view communication.
+        NSNotificationCenter.defaultCenter().postNotificationName("setControlContainerSize", object: allElementsApartFromControls)
         
         NSNotificationCenter.defaultCenter().addObserver(
             self,
@@ -69,11 +139,16 @@ class ViewController: UIViewController {
             object: nil
         )
         
-        let topHalf = UIScreen.mainScreen().bounds.width + navBar.frame.size.height + 2
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "addEmoji:",
+            name: "emojiChosen",
+            object: nil
+        )
         
-        NSNotificationCenter.defaultCenter().postNotificationName("setControlContainerSize", object: topHalf)
         
-        print("end of viewDidLoad in ViewController")
+        
+        print("\nend of viewDidLoad in ViewController")
         
         
     }
@@ -82,6 +157,42 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    @IBAction func setControlView(sender: UIButton) {
+        //extract tag from the button data and parse it as a CGFloat
+        let tag = CGFloat(sender.tag)
+        
+        //the below stuff is for cool button background effect.
+        tabBar.subviews.forEach({
+            if($0 !== sender && $0 is UIButton){
+                ($0 as! UIButton).backgroundColor = UIColor.clearColor()
+            }
+        })
+        
+        sender.backgroundColor = UIColor(hex: 0x4000FF)
+        
+        
+        self.view.layoutIfNeeded()
+        
+        //end cool button background effect.
+        //now we're gonna animate the view the user selected into position!
+        //in Storyboard we set a tag on each button, 1, 2, 3 depending on the screen. with clever maths we figure out the distance to move by.
+        
+        controlsContainerLeft.constant = screenSize.width - (screenSize.width * tag)
+        
+        UIView.animateWithDuration(
+            0.3,
+            delay:0,
+            options: [UIViewAnimationOptions.CurveEaseOut],
+            animations: {
+                self.view.layoutIfNeeded()
+            },
+            completion: {finished in })
+    }
+    
+    
     
     
     
@@ -142,13 +253,36 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func addEmoji(sender: UIButton) {
+    func addEmoji(notification: NSNotification) {
         
-        let str = sender.titleLabel?.text ?? "Error... 😱"
+        let str = notification.object as! String
         
         let emojiFrame = UIView(frame: CGRectMake(0,0,80,80))
         emojiFrame.userInteractionEnabled = false
         emojiFrame.center = imageContainer.center
+        
+        var centerCoords = CGPointMake(imageContainer.frame.size.width / 2, imageContainer.frame.size.height / 2)
+        let twoPercent = imageContainer.frame.size.width / 50
+    
+        //let's slightly randomize the center of the emoji. this way it's clear if somebody has added two emoji instead of one.
+        //we use the twopercent variable as the offset.
+        var random = arc4random_uniform(10) + 1
+        
+        if(random > 5){
+            centerCoords.x = centerCoords.x + (twoPercent * (CGFloat(random) / 10))
+        } else {
+            centerCoords.x = centerCoords.x - (twoPercent * (CGFloat(random) / 10))
+        }
+        
+        random = arc4random_uniform(10) + 1
+        
+        if(random > 5){
+            centerCoords.y = centerCoords.y + (twoPercent * (CGFloat(random) / 10))
+        } else {
+            centerCoords.y = centerCoords.y - (twoPercent * (CGFloat(random) / 10))
+        }
+        
+        emojiFrame.center = centerCoords
         
         let emoji = UIButton(frame: CGRectMake(0,0,80,80))
         
