@@ -198,6 +198,33 @@ class ViewController: UIViewController {
         
         controlsContainerLeft.constant = screenSize.width - (screenSize.width * tag)
         
+        //need to think of a better way to express the below. TODO
+        if(activeControlView == 1){
+            imageScrollView.userInteractionEnabled = true
+            
+            for(var i = imageContainer.subviews.count - 1; i >= 0; i--){
+                
+                if(imageContainer.subviews[i] is UIScrollView){
+                    continue
+                }
+                
+                imageContainer.subviews[i].alpha = 0.7
+            }
+        } else {
+            imageScrollView.userInteractionEnabled = false
+            
+            for(var i = imageContainer.subviews.count - 1; i >= 0; i--){
+                
+                if(imageContainer.subviews[i] is UIScrollView){
+                    continue
+                }
+                
+                imageContainer.subviews[i].alpha = 1
+            }
+        }
+        
+        
+        
         UIView.animateWithDuration(
             0.3,
             delay:0,
@@ -208,12 +235,6 @@ class ViewController: UIViewController {
             completion: {finished in })
         
         deselectAllEmoji()
-        
-        if(activeControlView != 1){
-            imageScrollView.userInteractionEnabled = false
-        } else {
-            imageScrollView.userInteractionEnabled = true
-        }
     }
     
     
@@ -442,11 +463,11 @@ class ViewController: UIViewController {
         for(var i = imageContainer.subviews.count - 1; i >= 0; i--){
             
             if(imageContainer.subviews[i] is UIScrollView){
-                return
+                continue
             }
             
             if(imageContainer.subviews[i].subviews.count == 0){
-                return
+                continue
             }
             
             let point = sender.locationInView(sender.view)
