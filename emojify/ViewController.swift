@@ -19,10 +19,19 @@ class ViewController: UIViewController {
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet weak var navBar: UINavigationBar!
-    @IBOutlet var imageView: UIImageView!
+    
+    
+    @IBOutlet weak var imageScrollView: UIScrollView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    
+    
+    
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imageContainerLeft: NSLayoutConstraint!
     @IBOutlet weak var imageContainerRight: NSLayoutConstraint!
+    
     
     
     @IBOutlet weak var controlsContainer: UIView!
@@ -39,6 +48,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         print("\nhello world bitches (ViewController)")
+        
+        self.view.layoutIfNeeded()
         
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -57,7 +68,9 @@ class ViewController: UIViewController {
         
         //calculate the size of everything on screen apart from controls container.
         //+2 +2 for the margin on either side of the control container
-        let allElementsApartFromControls = imageContainer.frame.size.height + navBar.frame.size.height + 1
+        let allElementsApartFromControls = imageContainer.bounds.height + navBar.bounds.height + 1
+        
+        print(allElementsApartFromControls, imageContainer.bounds.height, imageContainer.bounds.width, navBar.bounds.height)
         
         //TODO maybe only 2 sections rather than 3? Share screen might be a full page change.
         controlsContainerWidth.constant = screenSize.width * 3
@@ -175,6 +188,7 @@ class ViewController: UIViewController {
         sender.backgroundColor = UIColor(hex: 0x4000FF)
         
         activeControlView = tag
+        NSNotificationCenter.defaultCenter().postNotificationName("activeControlView", object: activeControlView)
         
         self.view.layoutIfNeeded()
         
@@ -194,6 +208,12 @@ class ViewController: UIViewController {
             completion: {finished in })
         
         deselectAllEmoji()
+        
+        if(activeControlView != 1){
+            imageScrollView.userInteractionEnabled = false
+        } else {
+            imageScrollView.userInteractionEnabled = true
+        }
     }
     
     
@@ -206,15 +226,56 @@ class ViewController: UIViewController {
         
 //        print(notification)
         
-        let image = notification.object as! UIImage
+        let object = notification.object as! [AnyObject]
+        
+        var image = object[0] as! UIImage
+        let asset = object[1] as! PHAsset
+        
+        
+        let pxwidth = CGFloat(asset.pixelWidth)
+        let pxheight = CGFloat(asset.pixelHeight)
+        
+        
+        //PHPhotoLibrary has sent us a temporary thumbnail image. we don't want any jumpy stuff in the scrollView so we are going to resize it to exactly the same pixels as the expected image.
+        if( (image.size.width != pxwidth) && (image.size.height != pxheight) ){
+            //we use 1.0 instead of 0.0 because 0.0 causes the device to scale from pixels to points. we don't wanna do that.
+            UIGraphicsBeginImageContextWithOptions(CGSizeMake(pxwidth, pxheight), false, 1.0)
+            image.drawInRect(
+                CGRectMake(
+                    0,
+                    0,
+                    pxwidth,
+                    pxheight
+                )
+            )
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
+        
         
         imageView.image = image
-        imageView.contentMode = .ScaleAspectFill
-        imageView.clipsToBounds = true
+        
+        
+        imageScrollView.delegate = self
+        
+        if(pxwidth > pxheight){
+            imageScrollView.minimumZoomScale = imageScrollView.bounds.size.height / pxheight
+        } else {
+            imageScrollView.minimumZoomScale = imageScrollView.bounds.size.width / pxwidth
+        }
+        
+        imageScrollView.zoomScale = imageScrollView.minimumZoomScale
+        
+        
+        let offsetX = imageScrollView.contentSize.width - (imageScrollView.bounds.size.width / 2);
+        let offsetY = imageScrollView.contentSize.height - (imageScrollView.bounds.size.height / 2);
+        
+        
+//        imageScrollView.contentOffset = CGPointMake(offsetX, offsetY)
         
         //remove all emoji
         imageContainer.subviews.forEach({
-            if($0 is UIImageView){
+            if($0 is UIScrollView){
                 return
             }
         
@@ -378,21 +439,28 @@ class ViewController: UIViewController {
             return
         }
         
-        imageContainer.subviews.forEach({
-            if($0 is UIImageView){
+        for(var i = imageContainer.subviews.count - 1; i >= 0; i--){
+            
+            if(imageContainer.subviews[i] is UIScrollView){
                 return
             }
             
-            if($0.subviews.count == 0){
+            if(imageContainer.subviews[i].subviews.count == 0){
                 return
             }
             
-            if(CGRectContainsPoint($0.frame, sender.locationInView(sender.view))){
-                let button : UIButton = $0.subviews[0] as! UIButton
+            let point = sender.locationInView(sender.view)
+            let newPoint = sender.view?.convertPoint(point, toView: imageContainer.subviews[i])
+            
+            if(CGRectContainsPoint(imageContainer.subviews[i].bounds, newPoint!)){
+                let button : UIButton = imageContainer.subviews[i].subviews[0] as! UIButton
                 
                 emojiTap(button)
+                
+                break
             }
-        })
+        }
+        
     }
     
     
@@ -427,6 +495,21 @@ class ViewController: UIViewController {
 extension ViewController: UIGestureRecognizerDelegate
 {
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true;
+        return true
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if(activeControlView != CGFloat(2)){
+            return false
+        }
+        
+        return true
+    }
+}
+
+extension ViewController: UIScrollViewDelegate
+{
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
 }

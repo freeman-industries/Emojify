@@ -70,6 +70,14 @@ class PhotosGridController : UICollectionViewController {
             object: nil
         )
         
+        //messenger bus stuff to turn camera on and off
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "checkActiveControlView:",
+            name: "activeControlView",
+            object: nil
+        )
+        
         //This is where we ask for permission for the user's photo library. it would be nice to move this to the splash screen.
         PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
         
@@ -104,8 +112,6 @@ class PhotosGridController : UICollectionViewController {
                             
                             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                             previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill;
-                            
-                            captureSession.startRunning()
                         } catch {
                             print("av error...")
                         }
@@ -194,22 +200,20 @@ class PhotosGridController : UICollectionViewController {
         let options:PHImageRequestOptions = PHImageRequestOptions()
         options.synchronous = false
         
-        let screenWidth = UIScreen.mainScreen().bounds.width
-        let screenScale = UIScreen.mainScreen().scale
-        
-        let targetDimension = screenWidth * screenScale
-        
-//        print("Requesting image of size \(targetDimension) to be displayed.")
-        
         PHImageManager.defaultManager().requestImageForAsset(
             asset,
-            targetSize: CGSize(width: targetDimension, height: targetDimension),
-            contentMode: PHImageContentMode.AspectFill,
+            targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight),
+            contentMode: PHImageContentMode.Default,
             options: options,
             resultHandler: { (result, info) in
                 
+                var arr: [AnyObject] = []
+                
+                arr.append(result as UIImage!)
+                arr.append(asset as PHAsset!)
+                
                 //returns UIImage result
-                NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: result as UIImage!)
+                NSNotificationCenter.defaultCenter().postNotificationName("imageChosen", object: arr)
                 
                 
             }
@@ -242,8 +246,6 @@ class PhotosGridController : UICollectionViewController {
                 return cell
             }
             //no camera... return here. probs just simulator but maybe also broken iOS devices. i don't discriminate.
-            
-            
             
             if( !(cell.layer.sublayers?[0] is AVCaptureVideoPreviewLayer) ){
                 cell.layer.insertSublayer(previewLayer!, atIndex: 0)
@@ -408,6 +410,53 @@ class PhotosGridController : UICollectionViewController {
         dataObject[indexPath.row - 1]?["selected"] = false
         
         self.collectionView?.reloadData()
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row == 0){
+            let visiblePaths = self.collectionView?.indexPathsForVisibleItems()
+            
+            if(!visiblePaths!.contains(indexPath)){
+                toggleCaptureSession(false)
+            }
+            
+        }
+    }
+    
+    override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row == 0){
+            toggleCaptureSession(true)
+        }
+    }
+    
+    
+    func toggleCaptureSession(state: Bool){
+        if(state){
+            dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0), {
+//                print("activating camera...")
+                self.captureSession.startRunning()
+            })
+        } else {
+            dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0), {
+//                print("halting camera...")
+                self.captureSession.stopRunning()
+            })
+        }
+    }
+    
+    
+    func checkActiveControlView(notification: NSNotification){
+        let active = notification.object as! CGFloat
+        
+        if(active == 1){
+            let visiblePaths = self.collectionView?.indexPathsForVisibleItems()
+            
+            if(visiblePaths!.contains(NSIndexPath(forRow: 0, inSection: 0))){
+                toggleCaptureSession(true)
+            }
+        } else {
+            toggleCaptureSession(false)
+        }
     }
     
     

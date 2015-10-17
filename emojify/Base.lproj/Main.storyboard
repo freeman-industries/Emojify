@@ -41,23 +41,34 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybw-es-bVi">
                                 <rect key="frame" x="-4" y="64" width="328" height="328"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxb-b0-3vT">
-                                        <rect key="frame" x="0.0" y="0.0" width="328" height="328"/>
+                                    <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="2" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibU-t0-efJ">
+                                        <rect key="frame" x="8" y="8" width="312" height="312"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxb-b0-3vT">
+                                                <rect key="frame" x="-8" y="-8" width="328" height="328"/>
+                                                <animations/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <gestureRecognizers/>
+                                            </imageView>
+                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <gestureRecognizers/>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="yxb-b0-3vT" secondAttribute="height" multiplier="1:1" id="aal-zq-jlR"/>
+                                            <constraint firstAttribute="bottom" secondItem="yxb-b0-3vT" secondAttribute="bottom" id="6zC-gr-Map"/>
+                                            <constraint firstItem="yxb-b0-3vT" firstAttribute="top" secondItem="ibU-t0-efJ" secondAttribute="top" id="KFA-M5-tBj"/>
+                                            <constraint firstItem="yxb-b0-3vT" firstAttribute="leading" secondItem="ibU-t0-efJ" secondAttribute="leading" id="Mgf-tU-M8S"/>
+                                            <constraint firstAttribute="trailing" secondItem="yxb-b0-3vT" secondAttribute="trailing" id="UI6-fv-wDT"/>
                                         </constraints>
-                                    </imageView>
+                                    </scrollView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" secondItem="ybw-es-bVi" secondAttribute="width" multiplier="1:1" id="13r-ga-ZAQ"/>
-                                    <constraint firstItem="yxb-b0-3vT" firstAttribute="top" secondItem="ybw-es-bVi" secondAttribute="top" id="s3I-lx-WJN"/>
-                                    <constraint firstAttribute="bottom" secondItem="yxb-b0-3vT" secondAttribute="bottom" id="xgL-IA-05t"/>
-                                    <constraint firstItem="yxb-b0-3vT" firstAttribute="centerX" secondItem="ybw-es-bVi" secondAttribute="centerX" id="ygp-l8-Roe"/>
+                                    <constraint firstItem="ibU-t0-efJ" firstAttribute="top" secondItem="ybw-es-bVi" secondAttribute="top" id="FnQ-Zo-sJg"/>
+                                    <constraint firstAttribute="trailing" secondItem="ibU-t0-efJ" secondAttribute="trailing" id="T7I-TM-Hjz"/>
+                                    <constraint firstAttribute="bottom" secondItem="ibU-t0-efJ" secondAttribute="bottom" id="ZzI-ie-l0G"/>
+                                    <constraint firstItem="ibU-t0-efJ" firstAttribute="leading" secondItem="ybw-es-bVi" secondAttribute="leading" id="mXj-be-zqY"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="biG-KV-pGM" appends="YES" id="Vqd-yt-4zU"/>
@@ -208,6 +219,7 @@
                         <outlet property="imageContainer" destination="ybw-es-bVi" id="Fle-hK-6qK"/>
                         <outlet property="imageContainerLeft" destination="kmu-N3-FyW" id="lCe-i9-Ibi"/>
                         <outlet property="imageContainerRight" destination="eBf-bs-ZDA" id="nLk-0b-hZ7"/>
+                        <outlet property="imageScrollView" destination="ibU-t0-efJ" id="CL7-68-HQg"/>
                         <outlet property="imageView" destination="yxb-b0-3vT" id="6B2-uL-d7d"/>
                         <outlet property="navBar" destination="LSr-RN-XXf" id="aoq-BT-DGS"/>
                         <outlet property="tabBar" destination="q0j-h4-4M8" id="WaJ-U9-ln9"/>
@@ -314,7 +326,7 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xeB-BW-G1K">
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="FBB-s9-PbE">
                             <rect key="frame" x="0.0" y="50" width="320" height="45"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
@@ -338,7 +350,7 @@
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HjX-P8-kyM">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="46"/>
+                            <size key="footerReferenceSize" width="0.0" height="45"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
@@ -373,8 +385,8 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hy9-qA-p9b">
-                            <rect key="frame" x="0.0" y="50" width="240" height="46"/>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="hDE-ht-gRN">
+                            <rect key="frame" x="0.0" y="50" width="240" height="45"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </collectionReusableView>
