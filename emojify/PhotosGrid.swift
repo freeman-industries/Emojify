@@ -9,14 +9,22 @@
 import UIKit
 import Photos
 import Foundation
+import AVFoundation
 
 class PhotosGridController : UICollectionViewController {
     
-    //ray wenderleich's tutorial put this up here. it's just an ID from the Storyboard and it references the UICollectionViewCells.
-    let reuseIdentifier = "photoCell"
-    
     //empty model for our CollectionView. we'll initialize and use this later on.
-    var dataObject:[(Dictionary<String, Any>)?] = []
+    var dataObject: [(Dictionary<String, Any>)?] = []
+    //raw asset data from PHPhotoLibrary. used to compare for changes in photoLibraryDidChange
+    var assets = PHFetchResult()
+    
+    //for a live camera preview in the Photos Grid.
+    let captureSession = AVCaptureSession()
+    var captureDevice : AVCaptureDevice?
+    var previewLayer : AVCaptureVideoPreviewLayer?
+    
+    //for when a user taps the camera icon.
+    var imagePicker: UIImagePickerController!
     
     
     //i have to do this because I don't understand AutoLayout. Fuck autolayout.
@@ -36,6 +44,10 @@ class PhotosGridController : UICollectionViewController {
         self.collectionView?.frame = frame
     }
     
+    func scrollToTopControlContainer(notification: NSNotification) {
+        self.collectionView?.setContentOffset(CGPointMake(0, 0), animated: true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +59,14 @@ class PhotosGridController : UICollectionViewController {
             self,
             selector: "setControlContainerSize:",
             name: "setControlContainerSize",
+            object: nil
+        )
+        
+        //messenger bus stuff to scroll to top
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "scrollToTopControlContainer:",
+            name: "scrollToTopControlContainer",
             object: nil
         )
         
@@ -62,6 +82,45 @@ class PhotosGridController : UICollectionViewController {
             PHPhotoLibrary.requestAuthorization(requestAuthorizationHandler)
         }
         
+        //set up our camera input for the photos grid live preview.
+        captureSession.sessionPreset = AVCaptureSessionPresetLow
+        
+        let devices = AVCaptureDevice.devices()
+        
+        // Loop through all the capture devices on this phone
+        for device in devices {
+            // Make sure this particular device supports video
+            if (device.hasMediaType(AVMediaTypeVideo)) {
+                // Finally check the position and confirm we've got the back camera
+                if(device.position == AVCaptureDevicePosition.Back) {
+                    captureDevice = device as? AVCaptureDevice
+                    
+                    if(captureDevice != nil){
+                        
+                        do{
+                            let input = try AVCaptureDeviceInput(device: captureDevice)
+                        
+                            captureSession.addInput(input)
+                            
+                            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                            previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                            
+                            captureSession.startRunning()
+                        } catch {
+                            print("av error...")
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        //get imagePicker ready for if user taps camera.
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+        imagePicker.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        
         print("\nEnd of PhotosGrid viewDidLoad")
     }
     
@@ -74,8 +133,12 @@ class PhotosGridController : UICollectionViewController {
         
         phOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
-        let assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: phOptions)
+        assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: phOptions)
         
+        populateDataModel()
+    }
+    
+    func populateDataModel() {
         let count = assets.count
         
         print("\nNumber of images in camera roll...")
@@ -106,10 +169,10 @@ class PhotosGridController : UICollectionViewController {
                 self.sendHighResPhoto(assetIndex, asset: asset)
             }
             
-            //we have to explicitly tell collectionView to re-render. we do it like this.
-            self.collectionView?.reloadData()
         }
         
+        //we have to explicitly tell collectionView to re-render. we do it like this.
+        self.collectionView?.reloadData()
         
     }
     
@@ -154,9 +217,7 @@ class PhotosGridController : UICollectionViewController {
         )
         
     }
-    
-    
-    
+
     
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -164,17 +225,70 @@ class PhotosGridController : UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataObject.count
+        return dataObject.count + 1
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
+        //if this is the first cell in the entire collection, no thumbnail necessary. this is going to be a live camera preview.
+        if(indexPath.row == 0){
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cameraCell", forIndexPath: indexPath) as! PhotosCameraCellController
+            
+            if( !(cell.layer.sublayers?[0] is AVCaptureVideoPreviewLayer) ){
+                cell.layer.insertSublayer(previewLayer!, atIndex: 0)
+                previewLayer?.frame = cell.layer.frame
+            }
+            
+            //add sexy blur effect to cell
+            if( !(cell.subviews[0] is UIVisualEffectView) ){
+                
+                if !UIAccessibilityIsReduceTransparencyEnabled() {
+                    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    //always fill the view
+                    blurEffectView.frame = cell.bounds
+                    //blurEffectView.alpha = 0.6
+                    
+                    blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+                    
+                    //insert this right at the bottom of our tabBar, z-index 0
+                    cell.insertSubview(blurEffectView, atIndex: 0)
+                }
+                
+            }
+            
+            
+            cell.label.font = UIFont.systemFontOfSize(floor(cell.bounds.width * 0.5))
+            
+            return cell
+        }
+        
+        //so it's not the first cell in the photos grid. that means it's an image thumbnail...
+        
         //make a cell. we extended UICollectionViewCell to access the imageView.
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCellController
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath: indexPath) as! PhotosCellController
+        
+        
+        //ok, it's an image thumbnail!!!
+        
+        //check data model to see if this cell needs to be styled as selected or deselected.
+        let selected = dataObject[indexPath.row - 1]?["selected"]
+        
+        if(selected as? Bool == true){
+            cell.selected = true
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor(hex: 0x4000FF).CGColor
+            cell.imageView.alpha = 0.8
+        } else {
+            cell.selected = false
+            cell.layer.borderWidth = 0
+            cell.layer.borderColor = UIColor(hex: 0x4000FF).CGColor
+            cell.imageView.alpha = 1
+        }
+        
         
         //set up the imageView for this cell.
-        
-        let thumbnail = dataObject[indexPath.row]?["thumbnail"] as? UIImage
+        let thumbnail = dataObject[indexPath.row - 1]?["thumbnail"] as? UIImage
         if(thumbnail !== nil){
             //we've already downloaded a thumbnail for this asset! let's display it.
             cell.imageView.image = thumbnail
@@ -182,7 +296,7 @@ class PhotosGridController : UICollectionViewController {
             
         } else {
             //we need to retreive a thumbnail for this asset...
-            let asset = dataObject[indexPath.row]?["asset"] as! PHAsset
+            let asset = dataObject[indexPath.row - 1]?["asset"] as! PHAsset
             
             let options:PHImageRequestOptions = PHImageRequestOptions()
             options.synchronous = false
@@ -213,7 +327,7 @@ class PhotosGridController : UICollectionViewController {
                     cell.imageView.image = result as UIImage!
                     
                     //let's store it for next time too.
-                    self.dataObject[indexPath.row]?["thumbnail"] = result as UIImage!
+                    self.dataObject[indexPath.row - 1]?["thumbnail"] = result as UIImage!
                     
                     
                 }
@@ -221,25 +335,8 @@ class PhotosGridController : UICollectionViewController {
         }
         
         cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+
         
-        
-        
-        //check data model to see if this cell needs to be styled as selected or deselected.
-        let selected = dataObject[indexPath.row]?["selected"]
-        
-        if(selected as? Bool == true){
-            cell.selected = true
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor(hex: 0x4000FF).CGColor
-            cell.imageView.alpha = 0.7
-        } else {
-            cell.selected = false
-            cell.layer.borderWidth = 0
-            cell.layer.borderColor = UIColor(hex: 0x4000FF).CGColor
-            cell.imageView.alpha = 1
-        }
-        
-//        print("reloading!!!")
         
         return cell
     }
@@ -248,8 +345,14 @@ class PhotosGridController : UICollectionViewController {
 //        print("\nSelected:")
 //        print(indexPath.row)
         
-        if(dataObject[indexPath.row]?["selected"] as? Bool == true){
-            print("This tile is already selected. Ignoring...")
+        if(indexPath.row == 0){
+            //open camera here.
+            presentViewController(imagePicker, animated: true, completion: nil)
+            return
+        }
+        
+        if(dataObject[indexPath.row - 1]?["selected"] as? Bool == true){
+//            print("This tile is already selected. Ignoring...")
             return
         }
         
@@ -257,18 +360,22 @@ class PhotosGridController : UICollectionViewController {
             dataObject[i]?["selected"] = false
         }
         
-        dataObject[indexPath.row]?["selected"] = true
+        dataObject[indexPath.row - 1]?["selected"] = true
         
         self.collectionView?.reloadData()
         
-        sendHighResPhoto(indexPath.row, asset: dataObject[indexPath.row]?["asset"] as! PHAsset)
+        sendHighResPhoto(indexPath.row - 1, asset: dataObject[indexPath.row - 1]?["asset"] as! PHAsset)
     }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
 //        print("\nDeselected:")
 //        print(indexPath.row)
         
-        dataObject[indexPath.row]?["selected"] = false
+        if(indexPath.row == 0){
+            return
+        }
+        
+        dataObject[indexPath.row - 1]?["selected"] = false
         
         self.collectionView?.reloadData()
     }
@@ -281,20 +388,35 @@ extension PhotosGridController: PHPhotoLibraryChangeObserver
     func photoLibraryDidChange(changeInstance: PHChange)
     {
         
-        //TODO PRETTY SURE THIS IS IMPORTANT
+        //here we pass in our raw assets object and ask PHPhotoryLibrary to check for any image changes. We got an alert that something has changed...
+        let changeDetails = changeInstance.changeDetailsForFetchResult(assets)
+        let newAssets = changeDetails?.fetchResultAfterChanges
+        
+        //it would appear that this function fires quite a few times and probably updates things like metadata separately to the photos. therefore sometimes this fires, and the changes are apparently nil.
+        if(newAssets == nil){
+//            print("Caught a nil value for newAssets, so I'm returning.")
+            return
+        }
+        
+        //update the photo model
+        dispatch_async(dispatch_get_main_queue(), {
+            self.assets = newAssets!
+            self.populateDataModel()
+        })
         
         
-        
-        //        guard let assets = assets else
-        //        {
-        //            return
-        //        }
-        //
-        //        if let changeDetails = changeInstance.changeDetailsForFetchResult(assets) where uiCreated
-        //        {
-        //            PhotoBrowser.executeInMainQueue{ self.assets = changeDetails.fetchResultAfterChanges }
-        //        }
     }
+}
+
+extension PhotosGridController : UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+//        print(image)
+        
+    }
+    
 }
 
 extension PhotosGridController : UICollectionViewDelegateFlowLayout {

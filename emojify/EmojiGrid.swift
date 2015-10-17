@@ -36,6 +36,10 @@ class EmojiGridController : UICollectionViewController {
         self.collectionView?.frame = frame
     }
     
+    func scrollToTopControlContainer(notification: NSNotification) {
+        self.collectionView?.setContentOffset(CGPointMake(0, 0), animated: true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +51,14 @@ class EmojiGridController : UICollectionViewController {
             self,
             selector: "setControlContainerSize:",
             name: "setControlContainerSize",
+            object: nil
+        )
+        
+        //messenger bus stuff to scroll to top
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "scrollToTopControlContainer:",
+            name: "scrollToTopControlContainer",
             object: nil
         )
         

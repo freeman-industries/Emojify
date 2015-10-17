@@ -159,6 +159,7 @@ class ViewController: UIViewController {
     }
     
     
+    var activeControlView: CGFloat = 0
     
     @IBAction func setControlView(sender: UIButton) {
         //extract tag from the button data and parse it as a CGFloat
@@ -173,6 +174,7 @@ class ViewController: UIViewController {
         
         sender.backgroundColor = UIColor(hex: 0x4000FF)
         
+        activeControlView = tag
         
         self.view.layoutIfNeeded()
         
@@ -369,7 +371,11 @@ class ViewController: UIViewController {
     
     
     @IBAction func touchTap(sender: UITapGestureRecognizer) {
-        print(sender.locationInView(sender.view))
+        
+        if(sender.view is UINavigationBar){
+            NSNotificationCenter.defaultCenter().postNotificationName("scrollToTopControlContainer", object: nil)
+            return
+        }
         
         imageContainer.subviews.forEach({
             if($0 is UIImageView){
