@@ -156,7 +156,7 @@
                                         <rect key="frame" x="196" y="-2" width="86" height="30"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="15"/>
-                                        <state key="normal" title="SHARE">
+                                        <state key="normal" title="FINISH">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="selected" title="3. SHARE">

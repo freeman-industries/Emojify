@@ -221,7 +221,7 @@ class ViewController: UIViewController {
             $0.removeFromSuperview()
         })
         
-        emojiSelected = true
+        emojiSelected = false
         activeEmoji = UIButton()
     }
     
@@ -234,7 +234,7 @@ class ViewController: UIViewController {
     //TODO I have forced emojiSelected to always be true. I want people to be able to position the background photo as well - current it crops to a square. I need to make the behaviour like Instagram - fill to square but people can manipulate the photo to include more or less, rotate etc.
     
     var activeEmoji = UIView()
-    var emojiSelected = true
+    var emojiSelected = false
     
     func deselectAllEmoji(){
         
@@ -243,6 +243,7 @@ class ViewController: UIViewController {
         }
         
         activeEmoji = UIView()
+        emojiSelected = false
 
     }
     
@@ -254,6 +255,7 @@ class ViewController: UIViewController {
         
         if(sender.superview! == activeEmoji){
             activeEmoji = UIView()
+            emojiSelected = false
             return
         }
         
@@ -335,8 +337,7 @@ class ViewController: UIViewController {
         let translation = sender.translationInView(self.view)
         
         if(emojiSelected == false){
-            imageView.center = CGPoint(x:imageView.center.x + translation.x,
-                y:imageView.center.y + translation.y)
+//            imageView.center = CGPoint(x:imageView.center.x + translation.x, y:imageView.center.y + translation.y)
         } else {
             activeEmoji.center = CGPoint(x:activeEmoji.center.x + translation.x,
                 y:activeEmoji.center.y + translation.y)
@@ -349,7 +350,7 @@ class ViewController: UIViewController {
     @IBAction func touchPinch(sender: UIPinchGestureRecognizer) {
 
         if(emojiSelected == false){
-            imageView.transform = CGAffineTransformScale(imageView.transform, sender.scale, sender.scale)
+//            imageView.transform = CGAffineTransformScale(imageView.transform, sender.scale, sender.scale)
         } else {
             activeEmoji.transform = CGAffineTransformScale(activeEmoji.transform, sender.scale, sender.scale)
         }
@@ -361,7 +362,7 @@ class ViewController: UIViewController {
     @IBAction func touchRotate(sender: UIRotationGestureRecognizer) {
 
         if(emojiSelected == false){
-            imageView.transform = CGAffineTransformRotate(imageView.transform, sender.rotation)
+//            imageView.transform = CGAffineTransformRotate(imageView.transform, sender.rotation)
         } else {
             activeEmoji.transform = CGAffineTransformRotate(activeEmoji.transform, sender.rotation)
         }

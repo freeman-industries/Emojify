@@ -118,7 +118,6 @@ class PhotosGridController : UICollectionViewController {
         //get imagePicker ready for if user taps camera.
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
         imagePicker.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         
         print("\nEnd of PhotosGrid viewDidLoad")
@@ -234,6 +233,18 @@ class PhotosGridController : UICollectionViewController {
         if(indexPath.row == 0){
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cameraCell", forIndexPath: indexPath) as! PhotosCameraCellController
             
+            
+            
+            //check for existence of camera. if not. we need to end this function quickly.
+            if( !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) ){
+                cell.label.text = "📷⚠️"
+                cell.label.font = UIFont.systemFontOfSize(floor(cell.bounds.width * 0.3))
+                return cell
+            }
+            //no camera... return here. probs just simulator but maybe also broken iOS devices. i don't discriminate.
+            
+            
+            
             if( !(cell.layer.sublayers?[0] is AVCaptureVideoPreviewLayer) ){
                 cell.layer.insertSublayer(previewLayer!, atIndex: 0)
                 previewLayer?.frame = cell.layer.frame
@@ -257,11 +268,16 @@ class PhotosGridController : UICollectionViewController {
                 
             }
             
-            
+            //set label font size for nice emoji icon
             cell.label.font = UIFont.systemFontOfSize(floor(cell.bounds.width * 0.5))
+            
             
             return cell
         }
+        
+        //END CAMERA STUFF
+        
+        
         
         //so it's not the first cell in the photos grid. that means it's an image thumbnail...
         
@@ -341,12 +357,26 @@ class PhotosGridController : UICollectionViewController {
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        if(indexPath.row == 0){
+            if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 //        print("\nSelected:")
 //        print(indexPath.row)
         
         if(indexPath.row == 0){
             //open camera here.
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
             presentViewController(imagePicker, animated: true, completion: nil)
             return
         }
@@ -413,7 +443,9 @@ extension PhotosGridController : UINavigationControllerDelegate, UIImagePickerCo
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-//        print(image)
+        
+        //Save it to the camera roll
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
     }
     
