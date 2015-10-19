@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3F55D5251BC6784F00377B8A"
-               BuildableName = "emojify.app"
-               BlueprintName = "emojify"
-               ReferencedContainer = "container:emojify.xcodeproj">
+               BuildableName = "Emojify.app"
+               BlueprintName = "Emojify"
+               ReferencedContainer = "container:Emojify.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "3F55D5391BC6784F00377B8A"
                BuildableName = "emojifyTests.xctest"
                BlueprintName = "emojifyTests"
-               ReferencedContainer = "container:emojify.xcodeproj">
+               ReferencedContainer = "container:Emojify.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "3F55D5441BC6784F00377B8A"
                BuildableName = "emojifyUITests.xctest"
                BlueprintName = "emojifyUITests"
-               ReferencedContainer = "container:emojify.xcodeproj">
+               ReferencedContainer = "container:Emojify.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F55D5251BC6784F00377B8A"
-            BuildableName = "emojify.app"
-            BlueprintName = "emojify"
-            ReferencedContainer = "container:emojify.xcodeproj">
+            BuildableName = "Emojify.app"
+            BlueprintName = "Emojify"
+            ReferencedContainer = "container:Emojify.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F55D5251BC6784F00377B8A"
-            BuildableName = "emojify.app"
-            BlueprintName = "emojify"
-            ReferencedContainer = "container:emojify.xcodeproj">
+            BuildableName = "Emojify.app"
+            BlueprintName = "Emojify"
+            ReferencedContainer = "container:Emojify.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F55D5251BC6784F00377B8A"
-            BuildableName = "emojify.app"
-            BlueprintName = "emojify"
-            ReferencedContainer = "container:emojify.xcodeproj">
+            BuildableName = "Emojify.app"
+            BlueprintName = "Emojify"
+            ReferencedContainer = "container:Emojify.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

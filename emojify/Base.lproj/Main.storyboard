@@ -9,7 +9,7 @@
         <!--Permissions Controller-->
         <scene sceneID="eA5-RE-n4L">
             <objects>
-                <viewController id="a33-Ew-YsM" userLabel="Permissions Controller" customClass="PermissionsViewController" customModule="emojify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="a33-Ew-YsM" userLabel="Permissions Controller" customClass="PermissionsViewController" customModule="Emojify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1v6-UI-yx6"/>
                         <viewControllerLayoutGuide type="bottom" id="C6e-NJ-HRf"/>
@@ -238,7 +238,7 @@
         <!--Main App-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" id="BYZ-38-t0r" userLabel="Main App" customClass="MainViewController" customModule="emojify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" id="BYZ-38-t0r" userLabel="Main App" customClass="MainViewController" customModule="Emojify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mtp-gR-5R0"/>
                         <viewControllerLayoutGuide type="bottom" id="nQP-CI-Who"/>
@@ -448,7 +448,7 @@
         <!--Photos Grid Controller-->
         <scene sceneID="Mx0-jn-Of3">
             <objects>
-                <viewController id="iRV-Ko-mkS" customClass="PhotosGridController" customModule="emojify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iRV-Ko-mkS" customClass="PhotosGridController" customModule="Emojify" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" dataMode="prototypes" id="kFd-r1-NaI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="164"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -461,7 +461,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cameraCell" id="NSH-zt-t6g" customClass="PhotosCameraCellController" customModule="emojify" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cameraCell" id="NSH-zt-t6g" customClass="PhotosCameraCellController" customModule="Emojify" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -489,7 +489,7 @@
                                     <outlet property="label" destination="Kvk-sr-Dge" id="tg5-Zd-mpG"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="TZ4-HE-Sat" customClass="PhotosCellController" customModule="emojify" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="TZ4-HE-Sat" customClass="PhotosCellController" customModule="Emojify" customModuleProvider="target">
                                 <rect key="frame" x="54" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -533,7 +533,7 @@
         <!--Emoji Grid Controller-->
         <scene sceneID="u8H-31-TS5">
             <objects>
-                <viewController id="aWA-HH-Ruz" customClass="EmojiGridController" customModule="emojify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aWA-HH-Ruz" customClass="EmojiGridController" customModule="Emojify" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="0eX-6T-da2">
                         <rect key="frame" x="0.0" y="0.0" width="298" height="164"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -546,7 +546,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emojiCell" id="H0X-ws-yNt" customClass="EmojiCellController" customModule="emojify" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emojiCell" id="H0X-ws-yNt" customClass="EmojiCellController" customModule="Emojify" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -591,7 +591,7 @@
         <!--Sharing Table Controller-->
         <scene sceneID="Xku-3D-JTC">
             <objects>
-                <viewController id="1cj-SY-5gT" customClass="SharingTableController" customModule="emojify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1cj-SY-5gT" customClass="SharingTableController" customModule="Emojify" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="45" id="liw-e0-Q27">
                         <rect key="frame" x="0.0" y="0.0" width="289" height="157"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -601,7 +601,7 @@
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="row" rowHeight="130" id="cb3-Dv-UYc" customClass="SharingTableCellController" customModule="emojify" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="row" rowHeight="130" id="cb3-Dv-UYc" customClass="SharingTableCellController" customModule="Emojify" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="1" width="289" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cb3-Dv-UYc" id="c8G-BZ-QII">

@@ -50,7 +50,7 @@
 		3F069B3B1BD5054100FF08D9 /* freeman-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeman-600.png"; sourceTree = "<group>"; };
 		3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-iOS-9.0.txt"; sourceTree = "<group>"; };
 		3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCameraCell.swift; sourceTree = "<group>"; };
-		3F55D5261BC6784F00377B8A /* emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F55D5261BC6784F00377B8A /* Emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F55D5291BC6784F00377B8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F55D52B1BC6784F00377B8A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		3F55D52E1BC6784F00377B8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		3F55D5271BC6784F00377B8A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3F55D5261BC6784F00377B8A /* emojify.app */,
+				3F55D5261BC6784F00377B8A /* Emojify.app */,
 				3F55D53A1BC6784F00377B8A /* emojifyTests.xctest */,
 				3F55D5451BC6784F00377B8A /* emojifyUITests.xctest */,
 			);
@@ -158,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3F55D5251BC6784F00377B8A /* emojify */ = {
+		3F55D5251BC6784F00377B8A /* Emojify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3F55D54E1BC6784F00377B8A /* Build configuration list for PBXNativeTarget "emojify" */;
+			buildConfigurationList = 3F55D54E1BC6784F00377B8A /* Build configuration list for PBXNativeTarget "Emojify" */;
 			buildPhases = (
 				3F55D5221BC6784F00377B8A /* Sources */,
 				3F55D5231BC6784F00377B8A /* Frameworks */,
@@ -170,9 +170,9 @@
 			);
 			dependencies = (
 			);
-			name = emojify;
+			name = Emojify;
 			productName = emojify;
-			productReference = 3F55D5261BC6784F00377B8A /* emojify.app */;
+			productReference = 3F55D5261BC6784F00377B8A /* Emojify.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3F55D5391BC6784F00377B8A /* emojifyTests */ = {
@@ -222,6 +222,7 @@
 				TargetAttributes = {
 					3F55D5251BC6784F00377B8A = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 8G79KQPSBX;
 					};
 					3F55D5391BC6784F00377B8A = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -233,7 +234,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3F55D5211BC6784F00377B8A /* Build configuration list for PBXProject "emojify" */;
+			buildConfigurationList = 3F55D5211BC6784F00377B8A /* Build configuration list for PBXProject "Emojify" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -246,7 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3F55D5251BC6784F00377B8A /* emojify */,
+				3F55D5251BC6784F00377B8A /* Emojify */,
 				3F55D5391BC6784F00377B8A /* emojifyTests */,
 				3F55D5441BC6784F00377B8A /* emojifyUITests */,
 			);
@@ -321,12 +322,12 @@
 /* Begin PBXTargetDependency section */
 		3F55D53C1BC6784F00377B8A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3F55D5251BC6784F00377B8A /* emojify */;
+			target = 3F55D5251BC6784F00377B8A /* Emojify */;
 			targetProxy = 3F55D53B1BC6784F00377B8A /* PBXContainerItemProxy */;
 		};
 		3F55D5471BC6784F00377B8A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3F55D5251BC6784F00377B8A /* emojify */;
+			target = 3F55D5251BC6784F00377B8A /* Emojify */;
 			targetProxy = 3F55D5461BC6784F00377B8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -438,10 +439,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = emojify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -451,10 +453,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = emojify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -511,7 +514,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3F55D5211BC6784F00377B8A /* Build configuration list for PBXProject "emojify" */ = {
+		3F55D5211BC6784F00377B8A /* Build configuration list for PBXProject "Emojify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3F55D54C1BC6784F00377B8A /* Debug */,
@@ -520,7 +523,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3F55D54E1BC6784F00377B8A /* Build configuration list for PBXNativeTarget "emojify" */ = {
+		3F55D54E1BC6784F00377B8A /* Build configuration list for PBXNativeTarget "Emojify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3F55D54F1BC6784F00377B8A /* Debug */,
