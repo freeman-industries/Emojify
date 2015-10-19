@@ -52,7 +52,7 @@ class EmojiGridController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("\nhello world bitches (EmojiGrid)")
+        print("\nhello world (EmojiGrid)")
         
         //messenger bus stuff for setControlContainerSize
         NSNotificationCenter.defaultCenter().addObserver(

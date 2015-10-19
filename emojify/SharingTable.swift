@@ -62,7 +62,7 @@ class SharingTableController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("\nhello world bitches (SharingTable)")
+        print("\nhello world (SharingTable)")
         
         //messenger bus stuff for setControlContainerSize
         NSNotificationCenter.defaultCenter().addObserver(

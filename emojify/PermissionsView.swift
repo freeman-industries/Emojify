@@ -57,7 +57,6 @@ class PermissionsViewController: UIViewController {
     }
     
     func authorizationCallback(){
-        print(authorizationStatus[0], authorizationStatus[1])
         if(authorizationStatus[0] == true && authorizationStatus[1] == true){
             dispatch_async(dispatch_get_main_queue(), {
                 if (self.isViewLoaded() == true && self.view.window != nil) {

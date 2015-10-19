@@ -54,9 +54,6 @@ class PhotosGridController : UICollectionViewController {
     
     
     func restartUserJourney() {
-        print("hello")
-        
-        
         scrollToTopControlContainer()
         
         for(var i = 1; i < dataObject.count; i++){
@@ -78,7 +75,7 @@ class PhotosGridController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("\nhello world bitches (PhotosGrid)")
+        print("\nhello world (PhotosGrid)")
         
         //messenger bus stuff for setControlContainerSize
         NSNotificationCenter.defaultCenter().addObserver(
