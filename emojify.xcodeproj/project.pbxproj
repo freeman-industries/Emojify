@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B351BD35A9500FF08D9 /* SharingTable.swift */; settings = {ASSET_TAGS = (); }; };
+		3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5291BC6784F00377B8A /* AppDelegate.swift */; };
 		3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D52B1BC6784F00377B8A /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F069B351BD35A9500FF08D9 /* SharingTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTable.swift; sourceTree = "<group>"; };
+		3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTableCell.swift; sourceTree = "<group>"; };
 		3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCameraCell.swift; sourceTree = "<group>"; };
 		3F55D5261BC6784F00377B8A /* emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F55D5291BC6784F00377B8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,7 +117,9 @@
 				3F55D52B1BC6784F00377B8A /* ViewController.swift */,
 				3F55D52D1BC6784F00377B8A /* Main.storyboard */,
 				3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */,
+				3F069B351BD35A9500FF08D9 /* SharingTable.swift */,
 				3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */,
+				3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */,
 				3F55D5591BCA593E00377B8A /* PhotosGrid.swift */,
 				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */,
@@ -275,8 +281,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */,
+				3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */,
 				3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */,
 				3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */,
+				3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */,
 				3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */,
 				3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */,
 				3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */,

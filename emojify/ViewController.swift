@@ -18,9 +18,6 @@ class ViewController: UIViewController {
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
-    @IBOutlet weak var navBar: UINavigationBar!
-    
-    
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
@@ -56,21 +53,9 @@ class ViewController: UIViewController {
         // Add styling and correct metrics to our view...
         let navbarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightHeavy)
         
-        navBar.translucent = false
-        navBar.barTintColor = UIColor(hex: 0x4000FF)
-        navBar.titleTextAttributes = [NSFontAttributeName : navbarFont, NSForegroundColorAttributeName : UIColor(hex: 0xFFFFFF)]
-        
-        if(screenSize.height < 568){
-            imageContainerLeft.constant = 40
-            imageContainerRight.constant = 40
-        }
-        
-        
         //calculate the size of everything on screen apart from controls container.
         //+2 +2 for the margin on either side of the control container
-        let allElementsApartFromControls = imageContainer.bounds.height + navBar.bounds.height + 1
-        
-        print(allElementsApartFromControls, imageContainer.bounds.height, imageContainer.bounds.width, navBar.bounds.height)
+        let allElementsApartFromControls = imageContainer.bounds.height + 1
         
         //TODO maybe only 2 sections rather than 3? Share screen might be a full page change.
         controlsContainerWidth.constant = screenSize.width * 3
@@ -156,6 +141,13 @@ class ViewController: UIViewController {
             self,
             selector: "addEmoji:",
             name: "emojiChosen",
+            object: nil
+        )
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "savePhoto:",
+            name: "savePhoto",
             object: nil
         )
         
@@ -249,7 +241,7 @@ class ViewController: UIViewController {
         
         let object = notification.object as! [AnyObject]
         
-        var image = object[0] as! UIImage
+        let image = object[0] as! UIImage
         let asset = object[1] as! PHAsset
         
         
@@ -257,27 +249,21 @@ class ViewController: UIViewController {
         let pxheight = CGFloat(asset.pixelHeight)
         
         
-        //PHPhotoLibrary has sent us a temporary thumbnail image. we don't want any jumpy stuff in the scrollView so we are going to resize it to exactly the same pixels as the expected image.
+//        //PHPhotoLibrary has sent us a temporary thumbnail image. we don't want any jumpy stuff in the scrollView so we are going to resize it to exactly the same pixels as the expected image.
         if( (image.size.width != pxwidth) && (image.size.height != pxheight) ){
-            //we use 1.0 instead of 0.0 because 0.0 causes the device to scale from pixels to points. we don't wanna do that.
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(pxwidth, pxheight), false, 1.0)
-            image.drawInRect(
-                CGRectMake(
-                    0,
-                    0,
-                    pxwidth,
-                    pxheight
-                )
-            )
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+//          //don't want the thumbnail. fuck the thumbnail.
+            return
         }
-        
+//
         
         imageView.image = image
+        imageView.contentMode = .ScaleAspectFill
         
+//        imageScrollView.contentSize = CGSize(width: pxwidth, height: pxheight)
         
         imageScrollView.delegate = self
+        
+        print(imageScrollView.contentSize.height, pxheight)
         
         if(pxwidth > pxheight){
             imageScrollView.minimumZoomScale = imageScrollView.bounds.size.height / pxheight
@@ -285,14 +271,15 @@ class ViewController: UIViewController {
             imageScrollView.minimumZoomScale = imageScrollView.bounds.size.width / pxwidth
         }
         
+        imageScrollView.maximumZoomScale = imageScrollView.minimumZoomScale * 3
         imageScrollView.zoomScale = imageScrollView.minimumZoomScale
         
         
-        let offsetX = imageScrollView.contentSize.width - (imageScrollView.bounds.size.width / 2);
-        let offsetY = imageScrollView.contentSize.height - (imageScrollView.bounds.size.height / 2);
+        let offsetX = (imageScrollView.contentSize.width / 2) - (imageScrollView.bounds.size.width / 2);
+        let offsetY = (imageScrollView.contentSize.height / 2) - (imageScrollView.bounds.size.height / 2);
         
         
-//        imageScrollView.contentOffset = CGPointMake(offsetX, offsetY)
+        imageScrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: false)
         
         //remove all emoji
         imageContainer.subviews.forEach({
@@ -492,7 +479,7 @@ class ViewController: UIViewController {
     //SECTION: LOAD IN PHOTOS (also saving, probs should move it)
     
     
-    @IBAction func savePhoto(sender: UIButton) {
+    @IBAction func savePhoto(notification: NSNotification) {
         //Create the UIImage
         let scale = UIScreen.mainScreen().scale
         UIGraphicsBeginImageContextWithOptions(imageContainer.frame.size, false, scale)
