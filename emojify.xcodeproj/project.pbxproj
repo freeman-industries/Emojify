@@ -24,7 +24,6 @@
 		3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D55B1BCB688F00377B8A /* PhotosCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */; settings = {ASSET_TAGS = (); }; };
 		3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */; settings = {ASSET_TAGS = (); }; };
-		3FB88F221BD16FB50079EDC3 /* allEmoji.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3FB88F211BD16FB50079EDC3 /* allEmoji.txt */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +67,6 @@
 		3F55D55B1BCB688F00377B8A /* PhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiGrid.swift; sourceTree = "<group>"; };
 		3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
-		3FB88F211BD16FB50079EDC3 /* allEmoji.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = allEmoji.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +130,6 @@
 				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */,
 				3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */,
-				3FB88F211BD16FB50079EDC3 /* allEmoji.txt */,
 				3F55D5301BC6784F00377B8A /* Assets.xcassets */,
 				3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */,
 				3F55D5351BC6784F00377B8A /* Info.plist */,
@@ -266,7 +263,6 @@
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
 				3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,
-				3FB88F221BD16FB50079EDC3 /* allEmoji.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
