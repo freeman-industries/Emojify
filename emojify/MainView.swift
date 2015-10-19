@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     
     
@@ -157,6 +157,13 @@ class ViewController: UIViewController {
             object: nil
         )
         
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "backToPermissions",
+            name: "backToPermissions",
+            object: nil
+        )
+        
         
         
         print("\nend of viewDidLoad in ViewController")
@@ -242,6 +249,10 @@ class ViewController: UIViewController {
     
     func restartUserJourney(){
         setControlView(1)
+    }
+    
+    func backToPermissions(){
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     
@@ -523,7 +534,7 @@ class ViewController: UIViewController {
 
 //SECTION: EXTENSIONS - important to keep things working.
 
-extension ViewController: UIGestureRecognizerDelegate
+extension MainViewController: UIGestureRecognizerDelegate
 {
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -538,7 +549,7 @@ extension ViewController: UIGestureRecognizerDelegate
     }
 }
 
-extension ViewController: UIScrollViewDelegate
+extension MainViewController: UIScrollViewDelegate
 {
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView

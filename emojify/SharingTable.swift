@@ -24,28 +24,7 @@ class SharingTableController : UITableViewController {
             [
                 "label": "🔁 Emojify another image!",
                 "interacted": false
-            ],
-            [
-                "label": "🔗 WhatsApp",
-                "interacted": false
-            ],
-            [
-                "label": "🔗 WeChat",
-                "interacted": false
-            ],
-            [
-                "label": "🔗 Instagram",
-                "interacted": false
-            ],
-            [
-                "label": "🔗 Twitter",
-                "interacted": false
-            ],
-            [
-                "label": "🔗 Facebook",
-                "interacted": false
-            ],
-            
+            ]
         ]
         
         self.tableView?.reloadData()

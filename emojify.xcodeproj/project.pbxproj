@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B351BD35A9500FF08D9 /* SharingTable.swift */; settings = {ASSET_TAGS = (); }; };
 		3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */; settings = {ASSET_TAGS = (); }; };
+		3F069B3A1BD4D8C100FF08D9 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */; settings = {ASSET_TAGS = (); }; };
+		3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F069B3B1BD5054100FF08D9 /* freeman-600.png */; settings = {ASSET_TAGS = (); }; };
 		3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5291BC6784F00377B8A /* AppDelegate.swift */; };
-		3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D52B1BC6784F00377B8A /* ViewController.swift */; };
+		3F55D52C1BC6784F00377B8A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D52B1BC6784F00377B8A /* MainView.swift */; };
 		3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D52D1BC6784F00377B8A /* Main.storyboard */; };
 		3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D5301BC6784F00377B8A /* Assets.xcassets */; };
 		3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */; };
@@ -44,10 +46,12 @@
 /* Begin PBXFileReference section */
 		3F069B351BD35A9500FF08D9 /* SharingTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTable.swift; sourceTree = "<group>"; };
 		3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTableCell.swift; sourceTree = "<group>"; };
+		3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
+		3F069B3B1BD5054100FF08D9 /* freeman-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeman-600.png"; sourceTree = "<group>"; };
 		3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCameraCell.swift; sourceTree = "<group>"; };
 		3F55D5261BC6784F00377B8A /* emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F55D5291BC6784F00377B8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F55D52B1BC6784F00377B8A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3F55D52B1BC6784F00377B8A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		3F55D52E1BC6784F00377B8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F55D5301BC6784F00377B8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F55D5331BC6784F00377B8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,8 +118,10 @@
 			isa = PBXGroup;
 			children = (
 				3F55D5291BC6784F00377B8A /* AppDelegate.swift */,
-				3F55D52B1BC6784F00377B8A /* ViewController.swift */,
+				3F55D52B1BC6784F00377B8A /* MainView.swift */,
+				3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */,
 				3F55D52D1BC6784F00377B8A /* Main.storyboard */,
+				3F069B3B1BD5054100FF08D9 /* freeman-600.png */,
 				3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */,
 				3F069B351BD35A9500FF08D9 /* SharingTable.swift */,
 				3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */,
@@ -254,6 +260,7 @@
 			files = (
 				3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */,
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
+				3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,
 				3FB88F221BD16FB50079EDC3 /* allEmoji.txt in Resources */,
 			);
@@ -283,9 +290,10 @@
 				3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */,
 				3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */,
 				3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */,
+				3F069B3A1BD4D8C100FF08D9 /* PermissionsView.swift in Sources */,
 				3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */,
 				3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */,
-				3F55D52C1BC6784F00377B8A /* ViewController.swift in Sources */,
+				3F55D52C1BC6784F00377B8A /* MainView.swift in Sources */,
 				3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */,
 				3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */,
 				3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */,
@@ -433,7 +441,7 @@
 				INFOPLIST_FILE = emojify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -446,7 +454,7 @@
 				INFOPLIST_FILE = emojify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
