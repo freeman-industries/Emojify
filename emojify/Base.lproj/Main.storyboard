@@ -60,18 +60,11 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2mI-pf-MP0">
                                 <rect key="frame" x="0.0" y="400" width="1000" height="200"/>
                                 <subviews>
-                                    <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDB-3R-4RT" userLabel="Photos Grid Container View">
+                                    <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDB-3R-4RT" userLabel="Photos Grid Container View">
                                         <rect key="frame" x="2" y="-7" width="320" height="164"/>
                                         <animations/>
                                         <connections>
                                             <segue destination="iRV-Ko-mkS" kind="embed" id="lFJ-Yy-P5z"/>
-                                        </connections>
-                                    </containerView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="167-4A-MJa" userLabel="Emoji Grid Container View">
-                                        <rect key="frame" x="330" y="-7" width="298" height="164"/>
-                                        <animations/>
-                                        <connections>
-                                            <segue destination="aWA-HH-Ruz" kind="embed" id="LAg-vN-jjg"/>
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfR-j5-HTC" userLabel="Sharing List Container View">
@@ -81,6 +74,13 @@
                                             <segue destination="1cj-SY-5gT" kind="embed" id="WZe-J6-R89"/>
                                         </connections>
                                     </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="167-4A-MJa" userLabel="Emoji Grid Container View">
+                                        <rect key="frame" x="330" y="-7" width="298" height="164"/>
+                                        <animations/>
+                                        <connections>
+                                            <segue destination="aWA-HH-Ruz" kind="embed" id="LAg-vN-jjg"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -88,6 +88,7 @@
                                     <constraint firstItem="167-4A-MJa" firstAttribute="leading" secondItem="lDB-3R-4RT" secondAttribute="trailing" id="3l0-TK-Sra"/>
                                     <constraint firstItem="WfR-j5-HTC" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" id="66d-vY-UMp"/>
                                     <constraint firstItem="lDB-3R-4RT" firstAttribute="leading" secondItem="2mI-pf-MP0" secondAttribute="leading" id="6i8-CE-vMb"/>
+                                    <constraint firstAttribute="bottom" secondItem="WfR-j5-HTC" secondAttribute="bottom" id="7EO-Jl-SVK"/>
                                     <constraint firstAttribute="width" identifier="id30" id="GbJ-4k-JfB"/>
                                     <constraint firstItem="167-4A-MJa" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" id="WdE-SV-gCD"/>
                                     <constraint firstAttribute="bottom" secondItem="167-4A-MJa" secondAttribute="bottom" id="Z8k-Hd-bGk"/>
@@ -110,7 +111,7 @@
                                             <color key="titleColor" red="0.25098039220000001" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="setControlView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OsX-FM-0Nr"/>
+                                            <action selector="tabBarButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LoC-qH-9uc"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HRA-Z9-p2H">
@@ -124,10 +125,10 @@
                                             <color key="titleColor" red="0.25098039220000001" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="setControlView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q9n-WT-Scr"/>
+                                            <action selector="tabBarButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qwz-B0-8tz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4h-bF-1k5">
+                                    <button opaque="NO" userInteractionEnabled="NO" alpha="0.5" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4h-bF-1k5">
                                         <rect key="frame" x="196" y="-2" width="86" height="30"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="15"/>
@@ -138,7 +139,7 @@
                                             <color key="titleColor" red="0.25098039220000001" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="setControlView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AMJ-V9-Crp"/>
+                                            <action selector="tabBarButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fZm-yx-AjH"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -366,7 +367,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="289" height="157"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
-                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

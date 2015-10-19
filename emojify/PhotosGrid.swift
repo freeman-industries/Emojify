@@ -44,9 +44,35 @@ class PhotosGridController : UICollectionViewController {
         self.collectionView?.frame = frame
     }
     
-    func scrollToTopControlContainer(notification: NSNotification) {
+    func scrollToTopControlContainer() {
         self.collectionView?.setContentOffset(CGPointMake(0, 0), animated: true)
     }
+    
+    
+    
+    
+    
+    
+    func restartUserJourney() {
+        print("hello")
+        
+        
+        scrollToTopControlContainer()
+        
+        for(var i = 1; i < dataObject.count; i++){
+            dataObject[i]?["selected"] = false
+        }
+        
+        dataObject[0]?["selected"] = true
+        sendHighResPhoto(0, asset: dataObject[0]?["asset"] as! PHAsset)
+        
+        self.collectionView?.reloadData()
+    }
+    
+    
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -65,7 +91,7 @@ class PhotosGridController : UICollectionViewController {
         //messenger bus stuff to scroll to top
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "scrollToTopControlContainer:",
+            selector: "scrollToTopControlContainer",
             name: "scrollToTopControlContainer",
             object: nil
         )
@@ -75,6 +101,13 @@ class PhotosGridController : UICollectionViewController {
             self,
             selector: "checkActiveControlView:",
             name: "activeControlView",
+            object: nil
+        )
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "restartUserJourney",
+            name: "restartUserJourney",
             object: nil
         )
         
@@ -146,8 +179,8 @@ class PhotosGridController : UICollectionViewController {
     func populateDataModel() {
         let count = assets.count
         
-        print("\nNumber of images in camera roll...")
-        print(count)
+//        print("\nNumber of images in camera roll...")
+//        print(count)
         
         //all the code for the rest of this function is about initing the model for our collectionView.
         dataObject = [(Dictionary<String, Any>)?](count: count, repeatedValue: nil)

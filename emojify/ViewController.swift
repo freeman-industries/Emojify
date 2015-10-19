@@ -51,13 +51,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Add styling and correct metrics to our view...
-        let navbarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightHeavy)
         
         //calculate the size of everything on screen apart from controls container.
         //+2 +2 for the margin on either side of the control container
         let allElementsApartFromControls = imageContainer.bounds.height + 1
         
-        //TODO maybe only 2 sections rather than 3? Share screen might be a full page change.
+        //our controls container has three screen-width views that we will tab between.
         controlsContainerWidth.constant = screenSize.width * 3
         //TODO this property should be animated based on app state. / 2 so we can see two states at the same time.
         controlsContainerLeft.constant = 0
@@ -123,7 +122,7 @@ class ViewController: UIViewController {
         }
         
         //let's initialize our tab bar by auto selecting the first button.
-        setControlView(tabBar.subviews[1] as! UIButton)
+        setControlView(1)
         
         //END TAB BAR STYLING
         
@@ -146,8 +145,15 @@ class ViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "savePhoto:",
+            selector: "savePhoto",
             name: "savePhoto",
+            object: nil
+        )
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "restartUserJourney",
+            name: "restartUserJourney",
             object: nil
         )
         
@@ -166,18 +172,23 @@ class ViewController: UIViewController {
     
     var activeControlView: CGFloat = 0
     
-    @IBAction func setControlView(sender: UIButton) {
+    @IBAction func tabBarButtonTap(sender: UIButton) {
         //extract tag from the button data and parse it as a CGFloat
-        let tag = CGFloat(sender.tag)
+        setControlView(CGFloat(sender.tag))
+    }
+    
+    func setControlView(tag: CGFloat){
         
+        let activeButton = tabBar.subviews[Int(tag)]
+    
         //the below stuff is for cool button background effect.
         tabBar.subviews.forEach({
-            if($0 !== sender && $0 is UIButton){
+            if($0 !== activeButton && $0 is UIButton){
                 ($0 as! UIButton).backgroundColor = UIColor.clearColor()
             }
         })
         
-        sender.backgroundColor = UIColor(hex: 0x4000FF)
+        activeButton.backgroundColor = UIColor(hex: 0x4000FF)
         
         activeControlView = tag
         NSNotificationCenter.defaultCenter().postNotificationName("activeControlView", object: activeControlView)
@@ -229,6 +240,9 @@ class ViewController: UIViewController {
         deselectAllEmoji()
     }
     
+    func restartUserJourney(){
+        setControlView(1)
+    }
     
     
     
@@ -263,7 +277,7 @@ class ViewController: UIViewController {
         
         imageScrollView.delegate = self
         
-        print(imageScrollView.contentSize.height, pxheight)
+//        print(imageScrollView.contentSize.height, pxheight)
         
         if(pxwidth > pxheight){
             imageScrollView.minimumZoomScale = imageScrollView.bounds.size.height / pxheight
@@ -292,6 +306,9 @@ class ViewController: UIViewController {
         
         emojiSelected = false
         activeEmoji = UIButton()
+        
+        tabBar.subviews[3].alpha = 0.5
+        tabBar.subviews[3].userInteractionEnabled = false
     }
     
     
@@ -396,6 +413,12 @@ class ViewController: UIViewController {
         imageContainer.addSubview(emojiFrame)
         
         emojiTap(emoji)
+        
+        
+        
+        
+        tabBar.subviews[3].alpha = 1
+        tabBar.subviews[3].userInteractionEnabled = true
     }
     
     
@@ -479,7 +502,7 @@ class ViewController: UIViewController {
     //SECTION: LOAD IN PHOTOS (also saving, probs should move it)
     
     
-    @IBAction func savePhoto(notification: NSNotification) {
+    @IBAction func savePhoto() {
         //Create the UIImage
         let scale = UIScreen.mainScreen().scale
         UIGraphicsBeginImageContextWithOptions(imageContainer.frame.size, false, scale)

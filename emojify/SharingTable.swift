@@ -13,45 +13,49 @@ import Foundation
 class SharingTableController : UITableViewController {
     
     //empty model for our TableView. we'll initialize and use this later on.
-    var dataObject: [(Dictionary<String, Any>)] = [
-        [
-            "label": "💾 Save to Photos",
-            "interacted": false
-        ],
-        [
-            "label": "🔁 Emojify another image!",
-            "interacted": false
-        ],
-        [
-            "label": "🔗 WhatsApp",
-            "interacted": false
-        ],
-        [
-            "label": "🔗 WeChat",
-            "interacted": false
-        ],
-        [
-            "label": "🔗 Instagram",
-            "interacted": false
-        ],
-        [
-            "label": "🔗 Twitter",
-            "interacted": false
-        ],
-        [
-            "label": "🔗 Facebook",
-            "interacted": false
-        ],
+    var dataObject: [(Dictionary<String, Any>)] = []
+    
+    func resetDataObject(){
+        dataObject = [
+            [
+                "label": "💾 Save to Photos",
+                "interacted": false
+            ],
+            [
+                "label": "🔁 Emojify another image!",
+                "interacted": false
+            ],
+            [
+                "label": "🔗 WhatsApp",
+                "interacted": false
+            ],
+            [
+                "label": "🔗 WeChat",
+                "interacted": false
+            ],
+            [
+                "label": "🔗 Instagram",
+                "interacted": false
+            ],
+            [
+                "label": "🔗 Twitter",
+                "interacted": false
+            ],
+            [
+                "label": "🔗 Facebook",
+                "interacted": false
+            ],
+            
+        ]
         
-    ]
+        self.tableView?.reloadData()
+    }
     
     var savedPhoto = false
     
     
     //i have to do this because I don't understand AutoLayout. Fuck autolayout.
     func setControlContainerSize(notification: NSNotification) {
-//        return
-        
         var frame: CGRect = self.view.frame
         
         let screenHeight = UIScreen.mainScreen().bounds.height
@@ -67,8 +71,12 @@ class SharingTableController : UITableViewController {
         self.tableView?.frame = frame
     }
     
-    func scrollToTopControlContainer(notification: NSNotification) {
+    func scrollToTopControlContainer() {
         self.tableView?.setContentOffset(CGPointMake(0, 0), animated: true)
+    }
+    
+    func resetSharingTable(notification: NSNotification) {
+        resetDataObject()
     }
     
     
@@ -88,14 +96,23 @@ class SharingTableController : UITableViewController {
         //messenger bus stuff to scroll to top
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "scrollToTopControlContainer:",
+            selector: "scrollToTopControlContainer",
             name: "scrollToTopControlContainer",
+            object: nil
+        )
+        
+        //messenger bus stuff to scroll to top
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "resetDataObject",
+            name: "restartUserJourney",
             object: nil
         )
         
         self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 45, right: 0)
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.tableView?.reloadData()
+        
+        resetDataObject()
         
         print("\nEnd of SharingTable viewDidLoad")
     }
@@ -124,17 +141,28 @@ class SharingTableController : UITableViewController {
         
         if(interacted){
             cell.textLabel!.alpha = 0.5
-            separator.alpha = 0
             cell.userInteractionEnabled = false
         } else {
             cell.textLabel!.alpha = 1
-            separator.alpha = 1
             cell.userInteractionEnabled = true
         }
         
         let selectedView = UIView()
         selectedView.frame = cell.frame
-        selectedView.backgroundColor = UIColor.blackColor()
+        selectedView.backgroundColor = UIColor(hex: 0x4000FF)
+        
+        if(indexPath.row == 0){
+            separator.alpha = 0
+        } else {
+            separator.alpha = 1
+            
+            let selectedSeparator = UIView()
+            
+            selectedSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 1)
+            selectedSeparator.backgroundColor = UIColor.blackColor()
+            
+            selectedView.addSubview(selectedSeparator)
+        }
         
         cell.selectedBackgroundView = selectedView
         
@@ -147,15 +175,20 @@ class SharingTableController : UITableViewController {
         if(indexPath.row == 0){
             dataObject[indexPath.row]["label"] = "✅ Saved to Photos"
             dataObject[indexPath.row]["interacted"] = true
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
         }
         
-        let timeout = NSTimeInterval(0.1)
+        if(indexPath.row == 1){
+            NSNotificationCenter.defaultCenter().postNotificationName("restartUserJourney", object: nil)
+        }
+        
+        let timeout = NSTimeInterval(0.05)
         self.performSelector("reloadData", withObject: nil, afterDelay: timeout)
         
     }
     
     func reloadData(){
-        print("hello")
         self.tableView?.reloadData()
     }
     
