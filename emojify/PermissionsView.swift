@@ -23,6 +23,7 @@ class PermissionsViewController: UIViewController {
     
     var authorizationStatus: [Bool?] = [nil, nil]
     var rejected = false
+    var segued = false
     
     override func loadView() {
         super.loadView()
@@ -57,12 +58,13 @@ class PermissionsViewController: UIViewController {
     }
     
     func authorizationCallback(){
-        if(authorizationStatus[0] == true && authorizationStatus[1] == true){
+        if(authorizationStatus[0] == true && authorizationStatus[1] == true && segued == false){
             dispatch_async(dispatch_get_main_queue(), {
                 if (self.isViewLoaded() == true && self.view.window != nil) {
                     self.performSegueWithIdentifier("main", sender: self)
                 }
             })
+            segued = true
         } else {
             if(authorizationStatus[0] != nil && authorizationStatus[1] != nil){
                 if(rejected == false){
@@ -120,6 +122,8 @@ class PermissionsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
+        
+        segued = false
         
         checkAuthorizationStatus()
     }
