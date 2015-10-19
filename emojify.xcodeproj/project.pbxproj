@@ -11,6 +11,7 @@
 		3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3F069B3A1BD4D8C100FF08D9 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */; settings = {ASSET_TAGS = (); }; };
 		3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F069B3B1BD5054100FF08D9 /* freeman-600.png */; settings = {ASSET_TAGS = (); }; };
+		3F0963941BD55E390067DD07 /* emoji-iOS-9.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */; settings = {ASSET_TAGS = (); }; };
 		3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */; settings = {ASSET_TAGS = (); }; };
 		3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5291BC6784F00377B8A /* AppDelegate.swift */; };
 		3F55D52C1BC6784F00377B8A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D52B1BC6784F00377B8A /* MainView.swift */; };
@@ -48,6 +49,7 @@
 		3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTableCell.swift; sourceTree = "<group>"; };
 		3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
 		3F069B3B1BD5054100FF08D9 /* freeman-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeman-600.png"; sourceTree = "<group>"; };
+		3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-iOS-9.0.txt"; sourceTree = "<group>"; };
 		3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCameraCell.swift; sourceTree = "<group>"; };
 		3F55D5261BC6784F00377B8A /* emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F55D5291BC6784F00377B8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				3F55D5591BCA593E00377B8A /* PhotosGrid.swift */,
 				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */,
+				3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */,
 				3FB88F211BD16FB50079EDC3 /* allEmoji.txt */,
 				3F55D5301BC6784F00377B8A /* Assets.xcassets */,
 				3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */,
+				3F0963941BD55E390067DD07 /* emoji-iOS-9.0.txt in Resources */,
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
 				3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,

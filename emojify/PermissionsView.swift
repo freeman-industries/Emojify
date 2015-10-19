@@ -77,8 +77,6 @@ class PermissionsViewController: UIViewController {
                         self.mainView.userInteractionEnabled = false
                         self.rejectedView.hidden = false
                         self.rejectedView.userInteractionEnabled = true
-                        
-                        NSNotificationCenter.defaultCenter().postNotificationName("backToPermissions", object: nil)
                     })
                 }
             }

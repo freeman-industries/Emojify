@@ -85,7 +85,7 @@ class EmojiGridController : UICollectionViewController {
     
     
     func getEmojiData(){
-        let path = NSBundle.mainBundle().pathForResource("allEmoji", ofType: "txt")
+        let path = NSBundle.mainBundle().pathForResource("emoji-iOS-9.0", ofType: "txt")
         
         do{
             //TODO iOS 9 doesn't support some of these characters. how can i make this per-device compatible??
@@ -93,7 +93,9 @@ class EmojiGridController : UICollectionViewController {
             let emojiFile = try String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
             
             //from stack overflow, splits string characters into array
-            let characters = Array(emojiFile.characters)
+//            let characters = Array(emojiFile.characters)
+            let characters = emojiFile.componentsSeparatedByString(":::::")
+//            let characters = emojiFile.characters.split{$0 == ":::::"}.map(String.init)
             
             characters.forEach({
                 dataObject.append(String($0))

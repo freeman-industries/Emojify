@@ -312,7 +312,7 @@
                                     </containerView>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="167-4A-MJa" firstAttribute="leading" secondItem="lDB-3R-4RT" secondAttribute="trailing" id="3l0-TK-Sra"/>
                                     <constraint firstItem="WfR-j5-HTC" firstAttribute="top" secondItem="2mI-pf-MP0" secondAttribute="top" id="66d-vY-UMp"/>

@@ -157,13 +157,6 @@ class MainViewController: UIViewController {
             object: nil
         )
         
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "backToPermissions",
-            name: "backToPermissions",
-            object: nil
-        )
-        
         
         
         print("\nend of viewDidLoad in ViewController")
@@ -250,11 +243,6 @@ class MainViewController: UIViewController {
     func restartUserJourney(){
         setControlView(1)
     }
-    
-    func backToPermissions(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
     
     
     
