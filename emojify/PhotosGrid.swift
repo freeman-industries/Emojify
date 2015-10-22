@@ -376,6 +376,9 @@ class PhotosGridController : UICollectionViewController {
                 resultHandler: { (result, info) in
                     
                     //returns UIImage result
+                    if(result == nil){
+                        return
+                    }
                     
                     //this will initially show us a tiny thumbnail, and then will overwrite with a bigger image asynchronously. pretty cool.
                     cell.imageView.image = result as UIImage!
