@@ -193,7 +193,7 @@ class PhotosGridController : UICollectionViewController {
             //we need to initialize our dictionaries now. note that all image data is currently blank.
             self.dataObject[assetIndex] = [
                 "asset": asset as PHAsset,
-                "thumbnail": nil as UIImage?,
+//                "thumbnail": nil as UIImage?,
                 "selected": false as Bool,
             ]
             
@@ -229,6 +229,7 @@ class PhotosGridController : UICollectionViewController {
 
         let options:PHImageRequestOptions = PHImageRequestOptions()
         options.synchronous = false
+        options.networkAccessAllowed = true;
         
         PHImageManager.defaultManager().requestImageForAsset(
             asset,
@@ -236,6 +237,11 @@ class PhotosGridController : UICollectionViewController {
             contentMode: PHImageContentMode.Default,
             options: options,
             resultHandler: { (result, info) in
+                
+                //discard the thumbnail versions! too much hassle to resize them for this version. TODO
+                if( (info?[PHImageResultIsDegradedKey])! as! NSObject == 1 ){
+                    return
+                }
                 
                 var arr: [AnyObject] = []
                 
@@ -336,13 +342,13 @@ class PhotosGridController : UICollectionViewController {
         
         
         //set up the imageView for this cell.
-        let thumbnail = dataObject[indexPath.row - 1]?["thumbnail"] as? UIImage
-        if(thumbnail !== nil){
-            //we've already downloaded a thumbnail for this asset! let's display it.
-            cell.imageView.image = thumbnail
-            
-            
-        } else {
+//        let thumbnail = dataObject[indexPath.row - 1]?["thumbnail"] as? UIImage
+//        if(thumbnail !== nil){
+//            //we've already downloaded a thumbnail for this asset! let's display it.
+//            cell.imageView.image = thumbnail
+//            
+//            
+//        } else {
             //we need to retreive a thumbnail for this asset...
             let asset = dataObject[indexPath.row - 1]?["asset"] as! PHAsset
             
@@ -375,12 +381,12 @@ class PhotosGridController : UICollectionViewController {
                     cell.imageView.image = result as UIImage!
                     
                     //let's store it for next time too.
-                    self.dataObject[indexPath.row - 1]?["thumbnail"] = result as UIImage!
+//                    self.dataObject[indexPath.row - 1]?["thumbnail"] = result as UIImage!
                     
                     
                 }
             )
-        }
+//        }
         
         cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
 

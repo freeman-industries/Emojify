@@ -226,6 +226,10 @@ class MainViewController: UIViewController {
             }
         }
         
+        if(activeControlView != 3){
+            NSNotificationCenter.defaultCenter().postNotificationName("photoChanged", object: nil)
+        }
+        
         
         
         UIView.animateWithDuration(
@@ -252,62 +256,56 @@ class MainViewController: UIViewController {
         
 //        print(notification)
         
-        let object = notification.object as! [AnyObject]
-        
-        let image = object[0] as! UIImage
-        let asset = object[1] as! PHAsset
-        
-        
-        let pxwidth = CGFloat(asset.pixelWidth)
-        let pxheight = CGFloat(asset.pixelHeight)
-        
-        
-//        //PHPhotoLibrary has sent us a temporary thumbnail image. we don't want any jumpy stuff in the scrollView so we are going to resize it to exactly the same pixels as the expected image.
-        if( (image.size.width != pxwidth) && (image.size.height != pxheight) ){
-//          //don't want the thumbnail. fuck the thumbnail.
-            return
-        }
-//
-        
-        imageView.image = image
-        imageView.contentMode = .ScaleAspectFill
-        
-//        imageScrollView.contentSize = CGSize(width: pxwidth, height: pxheight)
-        
-        imageScrollView.delegate = self
-        
-//        print(imageScrollView.contentSize.height, pxheight)
-        
-        if(pxwidth > pxheight){
-            imageScrollView.minimumZoomScale = imageScrollView.bounds.size.height / pxheight
-        } else {
-            imageScrollView.minimumZoomScale = imageScrollView.bounds.size.width / pxwidth
-        }
-        
-        imageScrollView.maximumZoomScale = imageScrollView.minimumZoomScale * 3
-        imageScrollView.zoomScale = imageScrollView.minimumZoomScale
-        
-        
-        let offsetX = (imageScrollView.contentSize.width / 2) - (imageScrollView.bounds.size.width / 2);
-        let offsetY = (imageScrollView.contentSize.height / 2) - (imageScrollView.bounds.size.height / 2);
-        
-        
-        imageScrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: false)
-        
-        //remove all emoji
-        imageContainer.subviews.forEach({
-            if($0 is UIScrollView){
-                return
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            let object = notification.object as! [AnyObject]
+            
+            let image = object[0] as! UIImage
+//            let asset = object[1] as! PHAsset
+            
+            self.imageView.image = image
+            self.imageView.contentMode = .ScaleAspectFill
+            
+            //        imageScrollView.contentSize = CGSize(width: pxwidth, height: pxheight)
+            
+            self.imageScrollView.delegate = self
+            
+            //        print(imageScrollView.contentSize.height, pxheight)
+            
+            if(image.size.width > image.size.height){
+                self.imageScrollView.minimumZoomScale = self.imageScrollView.bounds.size.height / image.size.height
+            } else {
+                self.imageScrollView.minimumZoomScale = self.imageScrollView.bounds.size.width / image.size.width
             }
-        
-            $0.removeFromSuperview()
+            
+            self.imageScrollView.maximumZoomScale = self.imageScrollView.minimumZoomScale * 3
+            self.imageScrollView.zoomScale = self.imageScrollView.minimumZoomScale
+            
+            
+            let offsetX = (self.imageScrollView.contentSize.width / 2) - (self.imageScrollView.bounds.size.width / 2);
+            let offsetY = (self.imageScrollView.contentSize.height / 2) - (self.imageScrollView.bounds.size.height / 2);
+            
+            
+            self.imageScrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: false)
+            
+            //remove all emoji
+            self.imageContainer.subviews.forEach({
+                if($0 is UIScrollView){
+                    return
+                }
+                
+                $0.removeFromSuperview()
+            })
+            
+            self.emojiSelected = false
+            self.activeEmoji = UIButton()
+            
+            if(self.activeControlView != 3){
+                self.tabBar.subviews[3].alpha = 0.5
+                self.tabBar.subviews[3].userInteractionEnabled = false
+            }
+            
         })
-        
-        emojiSelected = false
-        activeEmoji = UIButton()
-        
-        tabBar.subviews[3].alpha = 0.5
-        tabBar.subviews[3].userInteractionEnabled = false
     }
     
     

@@ -88,6 +88,14 @@ class SharingTableController : UITableViewController {
             object: nil
         )
         
+        //messenger bus stuff to scroll to top
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "resetDataObject",
+            name: "photoChanged",
+            object: nil
+        )
+        
         self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 45, right: 0)
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         
