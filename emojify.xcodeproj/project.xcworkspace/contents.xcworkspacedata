@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:emojify.xcodeproj">
+      location = "self:/Users/nfrmn/Projects/freeman/emojify/emojify/Emojify.xcodeproj">
    </FileRef>
 </Workspace>
