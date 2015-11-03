@@ -24,6 +24,22 @@ class SharingTableController : UITableViewController {
             [
                 "label": "🔁 Emojify another image!",
                 "interacted": false
+            ],
+            [
+                "label": "WhatsApp",
+                "interacted": false
+            ],
+            [
+                "label": "Instagram",
+                "interacted": false
+            ],
+            [
+                "label": "Facebook",
+                "interacted": false
+            ],
+            [
+                "label": "WeChat",
+                "interacted": false
             ]
         ]
         
@@ -96,7 +112,18 @@ class SharingTableController : UITableViewController {
             object: nil
         )
         
-        self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 45, right: 0)
+        
+        
+        var bottomMargin: CGFloat = 45
+        
+        //iOS 8 seems to treat footers and collectionviews differently from iOS 9. This is a patch to support iOS 8.
+        let iOS90 = NSOperatingSystemVersion(majorVersion: 9, minorVersion: 0, patchVersion: 0)
+        if( !NSProcessInfo().isOperatingSystemAtLeastVersion(iOS90) ){
+            bottomMargin = 90
+        }
+        
+        
+        self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         
         resetDataObject()
