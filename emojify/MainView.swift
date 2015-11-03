@@ -157,6 +157,13 @@ class MainViewController: UIViewController {
             object: nil
         )
         
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "sharingDialog",
+            name: "sharingDialog",
+            object: nil
+        )
+        
         
         
         print("\nend of viewDidLoad in ViewController")
@@ -250,9 +257,36 @@ class MainViewController: UIViewController {
     
     
     
+    var documentInteractionController : UIDocumentInteractionController?
+    
+    func sharingDialog(){
+        
+        //take a screengrab of the image and generate a temporary url to save our image at.
+        let image = captureImage()
+        let temporarySharingImagePath = NSTemporaryDirectory() + "emojifiedimage.jpg"
+        
+        //write image to temporary url.
+        UIImageJPEGRepresentation(image, 1)?.writeToFile(temporarySharingImagePath, atomically: true)
+        
+        //now the open in... dialog
+        self.documentInteractionController = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: temporarySharingImagePath))
+        self.documentInteractionController!.delegate = self
+        
+        self.documentInteractionController!.presentOpenInMenuFromRect(CGRect(x: 0, y: 0, width: 0, height: 0), inView: self.view, animated: true)
+    }
+    
+    
+    
+    
+    
     
     
     func setImage(notification: NSNotification){
+        
+        //only allow this functionality on the photo grid view...
+        if(activeControlView != 1){
+            return
+        }
         
 //        print(notification)
         
@@ -494,12 +528,7 @@ class MainViewController: UIViewController {
     
     
     
-    
-    
-    //SECTION: LOAD IN PHOTOS (also saving, probs should move it)
-    
-    
-    @IBAction func savePhoto() {
+    func captureImage() -> UIImage {
         //Create the UIImage
         let scale = UIScreen.mainScreen().scale
         UIGraphicsBeginImageContextWithOptions(imageContainer.frame.size, false, scale)
@@ -508,6 +537,19 @@ class MainViewController: UIViewController {
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+
+        return image
+    }
+    
+    
+    
+    
+    //SECTION: LOAD IN PHOTOS (also saving, probs should move it)
+    
+    
+    @IBAction func savePhoto() {
+        
+        let image = captureImage()
         
         //Save it to the camera roll
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -540,4 +582,9 @@ extension MainViewController: UIScrollViewDelegate
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
+}
+
+extension MainViewController: UIDocumentInteractionControllerDelegate
+{
+
 }

@@ -18,27 +18,15 @@ class SharingTableController : UITableViewController {
     func resetDataObject(){
         dataObject = [
             [
-                "label": "💾 Save to Photos",
+                "label": "💾  Save to Photos",
                 "interacted": false
             ],
             [
-                "label": "🔁 Emojify another image!",
+                "label": "🔁  Emojify another image!",
                 "interacted": false
             ],
             [
-                "label": "WhatsApp",
-                "interacted": false
-            ],
-            [
-                "label": "Instagram",
-                "interacted": false
-            ],
-            [
-                "label": "Facebook",
-                "interacted": false
-            ],
-            [
-                "label": "WeChat",
+                "label": "📲  Share to...",
                 "interacted": false
             ]
         ]
@@ -144,7 +132,7 @@ class SharingTableController : UITableViewController {
         
         cell.clipsToBounds = true
         
-        let font = UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold)
+        let font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
         
         cell.textLabel!.text = text
         cell.textLabel!.font = font
@@ -187,7 +175,7 @@ class SharingTableController : UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
-            dataObject[indexPath.row]["label"] = "✅ Saved to Photos"
+            dataObject[indexPath.row]["label"] = "✅  Saved to Photos"
             dataObject[indexPath.row]["interacted"] = true
             
             NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
@@ -195,6 +183,10 @@ class SharingTableController : UITableViewController {
         
         if(indexPath.row == 1){
             NSNotificationCenter.defaultCenter().postNotificationName("restartUserJourney", object: nil)
+        }
+        
+        if(indexPath.row == 2){
+            NSNotificationCenter.defaultCenter().postNotificationName("sharingDialog", object: nil)
         }
         
         let timeout = NSTimeInterval(0.05)
