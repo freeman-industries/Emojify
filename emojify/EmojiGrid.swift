@@ -85,7 +85,26 @@ class EmojiGridController : UICollectionViewController {
     
     
     func getEmojiData(){
-        let path = NSBundle.mainBundle().pathForResource("emoji-iOS-9.0", ofType: "txt")
+        
+        var pathName = "";
+        
+        let iOS90 = NSOperatingSystemVersion(majorVersion: 9, minorVersion: 0, patchVersion: 0)
+        let iOS91 = NSOperatingSystemVersion(majorVersion: 9, minorVersion: 1, patchVersion: 0)
+        
+        if(NSProcessInfo().isOperatingSystemAtLeastVersion(iOS91)){
+            //iOS 9.1
+            pathName = "emoji-iOS-9.1"
+        } else if(NSProcessInfo().isOperatingSystemAtLeastVersion(iOS90)){
+            //iOS 9.0
+            pathName = "emoji-iOS-9.0"
+        } else {
+            //iOS 8.2
+            pathName = "emoji-iOS-8.2"
+        }
+        
+        print("Loading emoji file with path name " + pathName)
+        
+        let path = NSBundle.mainBundle().pathForResource(pathName, ofType: "txt")
         
         do{
             //TODO iOS 9 doesn't support some of these characters. how can i make this per-device compatible??
@@ -178,7 +197,17 @@ extension EmojiGridController : UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
             
-            return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            var bottomMargin: CGFloat = 10
+            
+            //iOS 8 seems to treat footers and collectionviews differently from iOS 9. This is a patch to support iOS 8.
+            let iOS90 = NSOperatingSystemVersion(majorVersion: 9, minorVersion: 0, patchVersion: 0)
+            if( !NSProcessInfo().isOperatingSystemAtLeastVersion(iOS90) ){
+                bottomMargin = 56
+            }
+            
+            
+            
+            return UIEdgeInsets(top: 10, left: 10, bottom: bottomMargin, right: 10)
 
     }
 }

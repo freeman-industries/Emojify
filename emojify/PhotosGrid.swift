@@ -555,11 +555,22 @@ extension PhotosGridController : UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellSize, height: cellSize)
     }
     
+    
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
             
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
+            var bottomMargin: CGFloat = 0
+            
+            //iOS 8 seems to treat footers and collectionviews differently from iOS 9. This is a patch to support iOS 8.
+            let iOS90 = NSOperatingSystemVersion(majorVersion: 9, minorVersion: 0, patchVersion: 0)
+            if( !NSProcessInfo().isOperatingSystemAtLeastVersion(iOS90) ){
+                bottomMargin = 46
+            }
+            
+            
+            
+            return UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+            
     }
 }

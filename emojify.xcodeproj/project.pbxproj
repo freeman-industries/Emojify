@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B351BD35A9500FF08D9 /* SharingTable.swift */; settings = {ASSET_TAGS = (); }; };
-		3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */; settings = {ASSET_TAGS = (); }; };
-		3F069B3A1BD4D8C100FF08D9 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */; settings = {ASSET_TAGS = (); }; };
-		3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F069B3B1BD5054100FF08D9 /* freeman-600.png */; settings = {ASSET_TAGS = (); }; };
-		3F0963941BD55E390067DD07 /* emoji-iOS-9.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */; settings = {ASSET_TAGS = (); }; };
-		3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */; settings = {ASSET_TAGS = (); }; };
+		3F069B361BD35A9500FF08D9 /* SharingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B351BD35A9500FF08D9 /* SharingTable.swift */; };
+		3F069B381BD38C7900FF08D9 /* SharingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */; };
+		3F069B3A1BD4D8C100FF08D9 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */; };
+		3F0963941BD55E390067DD07 /* emoji-iOS-9.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */; };
+		3F1A4C3F1BD1E4390044693A /* PhotosCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */; };
 		3F55D52A1BC6784F00377B8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5291BC6784F00377B8A /* AppDelegate.swift */; };
 		3F55D52C1BC6784F00377B8A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D52B1BC6784F00377B8A /* MainView.swift */; };
 		3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D52D1BC6784F00377B8A /* Main.storyboard */; };
@@ -20,10 +19,13 @@
 		3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */; };
 		3F55D53F1BC6784F00377B8A /* emojifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D53E1BC6784F00377B8A /* emojifyTests.swift */; };
 		3F55D54A1BC6784F00377B8A /* emojifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5491BC6784F00377B8A /* emojifyUITests.swift */; };
-		3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5591BCA593E00377B8A /* PhotosGrid.swift */; settings = {ASSET_TAGS = (); }; };
-		3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D55B1BCB688F00377B8A /* PhotosCell.swift */; settings = {ASSET_TAGS = (); }; };
-		3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */; settings = {ASSET_TAGS = (); }; };
-		3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */; settings = {ASSET_TAGS = (); }; };
+		3F55D55A1BCA593E00377B8A /* PhotosGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D5591BCA593E00377B8A /* PhotosGrid.swift */; };
+		3F55D55C1BCB688F00377B8A /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F55D55B1BCB688F00377B8A /* PhotosCell.swift */; };
+		3FB88F1D1BD1031D0079EDC3 /* EmojiGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */; };
+		3FB88F1E1BD1031D0079EDC3 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */; };
+		B60BB4551BE8C3E200F4BB8E /* emoji-iOS-8.2.txt in Resources */ = {isa = PBXBuildFile; fileRef = B60BB4541BE8C3E200F4BB8E /* emoji-iOS-8.2.txt */; };
+		B60BB4571BE8C3E800F4BB8E /* emoji-El-Capitan.txt in Resources */ = {isa = PBXBuildFile; fileRef = B60BB4561BE8C3E800F4BB8E /* emoji-El-Capitan.txt */; };
+		B60BB4591BE8C57B00F4BB8E /* emoji-iOS-9.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = B60BB4581BE8C57B00F4BB8E /* emoji-iOS-9.1.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +49,6 @@
 		3F069B351BD35A9500FF08D9 /* SharingTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTable.swift; sourceTree = "<group>"; };
 		3F069B371BD38C7900FF08D9 /* SharingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingTableCell.swift; sourceTree = "<group>"; };
 		3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
-		3F069B3B1BD5054100FF08D9 /* freeman-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeman-600.png"; sourceTree = "<group>"; };
 		3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-iOS-9.0.txt"; sourceTree = "<group>"; };
 		3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCameraCell.swift; sourceTree = "<group>"; };
 		3F55D5261BC6784F00377B8A /* Emojify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emojify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +68,9 @@
 		3F55D55B1BCB688F00377B8A /* PhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiGrid.swift; sourceTree = "<group>"; };
 		3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
+		B60BB4541BE8C3E200F4BB8E /* emoji-iOS-8.2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-iOS-8.2.txt"; sourceTree = "<group>"; };
+		B60BB4561BE8C3E800F4BB8E /* emoji-El-Capitan.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-El-Capitan.txt"; sourceTree = "<group>"; };
+		B60BB4581BE8C57B00F4BB8E /* emoji-iOS-9.1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emoji-iOS-9.1.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +125,6 @@
 				3F55D52B1BC6784F00377B8A /* MainView.swift */,
 				3F069B391BD4D8C100FF08D9 /* PermissionsView.swift */,
 				3F55D52D1BC6784F00377B8A /* Main.storyboard */,
-				3F069B3B1BD5054100FF08D9 /* freeman-600.png */,
 				3FB88F1B1BD1031D0079EDC3 /* EmojiGrid.swift */,
 				3F069B351BD35A9500FF08D9 /* SharingTable.swift */,
 				3FB88F1C1BD1031D0079EDC3 /* EmojiCell.swift */,
@@ -129,7 +132,10 @@
 				3F55D5591BCA593E00377B8A /* PhotosGrid.swift */,
 				3F55D55B1BCB688F00377B8A /* PhotosCell.swift */,
 				3F1A4C3E1BD1E4390044693A /* PhotosCameraCell.swift */,
+				B60BB4561BE8C3E800F4BB8E /* emoji-El-Capitan.txt */,
+				B60BB4541BE8C3E200F4BB8E /* emoji-iOS-8.2.txt */,
 				3F0963931BD55E390067DD07 /* emoji-iOS-9.0.txt */,
+				B60BB4581BE8C57B00F4BB8E /* emoji-iOS-9.1.txt */,
 				3F55D5301BC6784F00377B8A /* Assets.xcassets */,
 				3F55D5321BC6784F00377B8A /* LaunchScreen.storyboard */,
 				3F55D5351BC6784F00377B8A /* Info.plist */,
@@ -259,10 +265,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B60BB4591BE8C57B00F4BB8E /* emoji-iOS-9.1.txt in Resources */,
+				B60BB4571BE8C3E800F4BB8E /* emoji-El-Capitan.txt in Resources */,
 				3F55D5341BC6784F00377B8A /* LaunchScreen.storyboard in Resources */,
 				3F0963941BD55E390067DD07 /* emoji-iOS-9.0.txt in Resources */,
 				3F55D5311BC6784F00377B8A /* Assets.xcassets in Resources */,
-				3F069B3C1BD5054100FF08D9 /* freeman-600.png in Resources */,
+				B60BB4551BE8C3E200F4BB8E /* emoji-iOS-8.2.txt in Resources */,
 				3F55D52F1BC6784F00377B8A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,13 +447,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nabil Freeman (8G79KQPSBX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = emojify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bcc2477c-2d06-4502-936e-190394872895";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -454,13 +463,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nabil Freeman (8G79KQPSBX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = emojify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.freeman.emojify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bcc2477c-2d06-4502-936e-190394872895";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
