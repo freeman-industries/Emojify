@@ -257,22 +257,39 @@ class MainViewController: UIViewController {
     
     
     
-    var documentInteractionController : UIDocumentInteractionController?
+//    var documentInteractionController : UIDocumentInteractionController?
+    var activityInteractionController : UIActivityViewController?
     
     func sharingDialog(){
         
         //take a screengrab of the image and generate a temporary url to save our image at.
         let image = captureImage()
-        let temporarySharingImagePath = NSTemporaryDirectory() + "emojifiedimage.jpg"
+//        let temporarySharingImagePath = NSTemporaryDirectory() + "EMOJI-IMAGE-OMG-OMG.jpeg"
         
         //write image to temporary url.
-        UIImageJPEGRepresentation(image, 1)?.writeToFile(temporarySharingImagePath, atomically: true)
+//        UIImageJPEGRepresentation(image, 1)?.writeToFile(temporarySharingImagePath, atomically: true)
+        
+        
+//        let objectsToShare = [textToShare, myWebsite]
+//        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        self.activityInteractionController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        self.activityInteractionController?.excludedActivityTypes = [
+            UIActivityTypePrint,
+            UIActivityTypeCopyToPasteboard,
+            UIActivityTypeSaveToCameraRoll,
+            UIActivityTypeAddToReadingList,
+            UIActivityTypeAirDrop
+        ]
+        
+        self.presentViewController(self.activityInteractionController!, animated: true, completion: nil)
         
         //now the open in... dialog
-        self.documentInteractionController = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: temporarySharingImagePath))
-        self.documentInteractionController!.delegate = self
-        
-        self.documentInteractionController!.presentOpenInMenuFromRect(CGRect(x: 0, y: 0, width: 0, height: 0), inView: self.view, animated: true)
+//        self.documentInteractionController = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: temporarySharingImagePath))
+//        self.documentInteractionController!.UTI = "public/jpeg"
+//        self.documentInteractionController!.delegate = self
+//        
+//        self.documentInteractionController!.presentOpenInMenuFromRect(CGRect(x: 0, y: 0, width: 0, height: 0), inView: self.view, animated: true)
     }
     
     
