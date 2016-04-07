@@ -1,5 +1,7 @@
 # Emojify
-The iPhone app that soared to the top of Product Hunt, with thousands of users... Now open source!
+The iPhone app that soared to the top of Product Hunt, with thousands of users, and reviews on Dutch and Welsh TV... Now open source!
+
+Original PH listing: https://www.producthunt.com/tech/emojify-2
 
 🎺🎺🎺
 
