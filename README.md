@@ -12,4 +12,4 @@ Emojify will continue to receive updates whenever we feel like it, and you can f
 
 # YOU! (soulja boy tellem 😎💩🎵🎶🙉)
 
-If you'd like to contribute, please just go ahead. Anything goes! ⚡️💪
+If you'd like to contribute, please just go ahead. Anything goes! We will ship your features and credit you on The App Store! ⚡️💪
